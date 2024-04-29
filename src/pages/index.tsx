@@ -1,244 +1,48 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex, SimpleGrid, Container } from "@chakra-ui/react";
+import axios from "axios";
+import { BaseCard } from "@/components/organisms/Card";
+import { CardList } from "@/components/organisms/CardList";
 
-const index = () => {
+const TMDB_BASE_URL = process.env.NEXT_PUBLIC_TMBD_MOIVE_BASE_URL;
+const Authorization = "Bearer " + process.env.TMDB_ACCESS_TOKEN;
+
+export const getServerSideProps = async () => {
+  const url = `${TMDB_BASE_URL}/popular`;
+  const popularMovie = await axios.get(url, {
+    params: {
+      language: "ko-KR",
+      region: "kr",
+    },
+    headers: {
+      Authorization,
+    },
+  });
+  return {
+    props: {
+      popular: popularMovie.data,
+    },
+  };
+};
+
+interface Props {
+  popular: any;
+}
+
+const index = ({ popular }: Props) => {
+  const movies: any = popular.results;
   return (
-    <Box w={"100%"} h={"100%"}>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, ex non.
-      Mollitia perferendis natus dolorum accusamus ipsum nulla quae itaque
-      incidunt, quaerat, sunt exercitationem quam dicta ex esse vitae possimus!
-    </Box>
+    <Container mt={16} maxW={"container.xl"}>
+      {/* <SimpleGrid
+        spacing={4}
+        templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+      >
+        {movies.map((movie: any) => (
+          <BaseCard key={movie.id} {...movie} />
+        ))}
+      </SimpleGrid> */}
+      <CardList movies={movies} />
+    </Container>
   );
 };
 

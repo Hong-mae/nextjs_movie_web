@@ -13,9 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider>
       <div className={noto.className}>
         <Navbar />
-        <Box mt={16}>
-          <Component {...pageProps} />
-        </Box>
+        <Component {...pageProps} />
       </div>
     </ChakraProvider>
   );

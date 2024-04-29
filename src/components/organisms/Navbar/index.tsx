@@ -38,47 +38,54 @@ export const Navbar = () => {
       right={0}
       borderBottom={1}
       borderStyle={"solid"}
-      borderColor={"blue.100"}
+      borderColor={useColorModeValue("teal.600", "white")}
       bg={useColorModeValue("white", "gray.800")}
       px={4}
+      zIndex={1}
     >
-      <Flex
-        h={16}
-        alignItems={"center"}
-        justifyContent={"space-between"}
-        color={useColorModeValue("teal.600", "white")}
-      >
-        <IconButton
-          size={"md"}
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label={"Open Menu"}
-          display={{ md: "none" }}
-          onClick={isOpen ? onClose : onOpen}
-        />
-
-        <HStack alignItems={"center"}>
-          <Box as="a" href="/">
-            Logo
-          </Box>
-        </HStack>
-
-        <HStack alignItems={"center"}>
-          <HStack as={"nav"} spacing={4} display={{ base: "none", md: "flex" }}>
-            {NAV_ITEM.map((item) => {
-              return (
-                <NavLink key={item.label} href={item.href}>
-                  {item.label}
-                </NavLink>
-              );
-            })}
-          </HStack>
+      <Container maxW={"container.xl"}>
+        <Flex
+          h={16}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          color={useColorModeValue("teal.600", "white")}
+        >
           <IconButton
-            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+            size={"md"}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
             aria-label={"Open Menu"}
-            onClick={toggleColorMode}
+            display={{ md: "none" }}
+            onClick={isOpen ? onClose : onOpen}
           />
-        </HStack>
-      </Flex>
+
+          <HStack alignItems={"center"}>
+            <Box as="a" href="/">
+              Logo
+            </Box>
+          </HStack>
+
+          <HStack alignItems={"center"}>
+            <HStack
+              as={"nav"}
+              spacing={4}
+              display={{ base: "none", md: "flex" }}
+            >
+              {NAV_ITEM.map((item) => {
+                return (
+                  <NavLink key={item.label} href={item.href}>
+                    {item.label}
+                  </NavLink>
+                );
+              })}
+            </HStack>
+            <IconButton
+              icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              aria-label={"Open Menu"}
+              onClick={toggleColorMode}
+            />
+          </HStack>
+        </Flex>
+      </Container>
 
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
