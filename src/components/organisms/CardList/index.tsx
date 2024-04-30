@@ -23,7 +23,7 @@ export const CardList = ({ movies }: Props) => {
   return (
     <SimpleGrid
       spacing={4}
-      templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+      templateColumns="repeat(auto-fill, minmax(200px, 1fr))"
     >
       {movies.map((movie: MovieProps) => (
         <BaseCard key={movie.id} {...movie} />

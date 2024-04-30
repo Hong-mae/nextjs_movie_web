@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  Box,
   Button,
-  ButtonGroup,
   Card,
   CardBody,
   CardFooter,
@@ -15,6 +13,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { StarIcon } from "@chakra-ui/icons";
 
 const TMDB_IMAGE_URL = process.env.NEXT_PUBLIC_TMBD_IMAGE_BASE_URL;
 
@@ -22,6 +21,8 @@ interface CardProps {
   poster_path?: string;
   title?: string;
   overview?: string;
+  vote_average: number;
+  release_date: string;
   id: number;
 }
 
@@ -29,6 +30,8 @@ export const BaseCard = ({
   poster_path = "/no_image.png",
   title = "No Title",
   overview = "No Overview",
+  vote_average,
+  release_date,
   id,
 }: CardProps) => {
   const imgUrl =
@@ -39,7 +42,11 @@ export const BaseCard = ({
   return (
     <Card maxW="md">
       <CardBody>
-        <Flex alignItems={"center"} justifyContent={"center"}>
+        <Flex
+          alignItems={"flex-start"}
+          justifyContent={"center"}
+          minH={"300px"}
+        >
           <Image
             src={imgUrl}
             alt="Green double couch with wooden legs"
@@ -65,18 +72,28 @@ export const BaseCard = ({
               WebkitBoxOrient: "vertical",
               overflow: "hidden",
             }}
+            minH={"72px"}
           >
             {overview ? overview : "등록된 정보가 없습니다."}
           </Text>
         </Stack>
+        <Flex alignItems={"center"} justifyContent={"end"} color={"gray.400"}>
+          <Text>{release_date}</Text>
+        </Flex>
       </CardBody>
       <Divider color={useColorModeValue("teal.600", "white")} />
       <CardFooter alignItems={"center"} justifyContent={"space-between"}>
-        <HStack></HStack>
+        <HStack gap={0}>
+          <StarIcon />
+          <HStack gap={0} alignItems={"baseline"}>
+            <Text fontSize={16}>{`${vote_average.toFixed(1)}`}</Text>
+            <Text fontSize={10}>/10</Text>
+          </HStack>
+        </HStack>
         <HStack>
           <Button
             as={"a"}
-            href={`/details/${id}`}
+            href={`/movie/details/${id}`}
             variant="link"
             colorScheme="blue"
           >

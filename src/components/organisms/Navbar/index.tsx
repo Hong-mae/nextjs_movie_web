@@ -1,30 +1,16 @@
 import {
   Box,
   Flex,
-  Text,
   IconButton,
-  Button,
   Stack,
-  Collapse,
-  Icon,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
   Container,
   useColorMode,
   HStack,
 } from "@chakra-ui/react";
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-  MoonIcon,
-  SunIcon,
-} from "@chakra-ui/icons";
+
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -40,7 +26,6 @@ export const Navbar = () => {
       borderStyle={"solid"}
       borderColor={useColorModeValue("teal.600", "white")}
       bg={useColorModeValue("white", "gray.800")}
-      px={4}
       zIndex={1}
     >
       <Container maxW={"container.xl"}>
@@ -59,8 +44,13 @@ export const Navbar = () => {
           />
 
           <HStack alignItems={"center"}>
-            <Box as="a" href="/">
-              Logo
+            <Box
+              as="a"
+              href="/"
+              p={4}
+              color={useColorModeValue("teal.600", "white")}
+            >
+              영화보자구!
             </Box>
           </HStack>
 
@@ -133,14 +123,18 @@ const NavLink = ({ href, children }: Props) => {
 const NAV_ITEM = [
   {
     label: "인기 영화",
-    href: "/popular",
+    href: "/movies/popular",
   },
   {
     label: "상영중",
-    href: "/now_playing",
+    href: "/movies/now_playing",
   },
   {
     label: "상영 예정",
-    href: "/upcoming",
+    href: "/movies/upcoming",
+  },
+  {
+    label: "높은 평점",
+    href: "/movies/top_rated",
   },
 ];
