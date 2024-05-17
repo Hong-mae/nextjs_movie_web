@@ -11,10 +11,10 @@ const noto = Noto_Sans_KR({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider>
-      <div className={noto.className}>
+      <Box className={noto.className} h={"100vh"}>
         <Navbar />
         <Component {...pageProps} />
-      </div>
+      </Box>
     </ChakraProvider>
   );
 }

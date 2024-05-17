@@ -21,3 +21,22 @@ export const getMoiveList = async (target: string) => {
     },
   };
 };
+
+export const getMovieDetails = async (movie_id: number) => {
+  const url = `${TMDB_BASE_URL}/${movie_id}`;
+  const getDetails = await axios.get(url, {
+    params: {
+      language: "ko-KR",
+      region: "kr",
+    },
+    headers: {
+      Authorization,
+    },
+  });
+
+  return {
+    props: {
+      details: getDetails.data,
+    },
+  };
+};

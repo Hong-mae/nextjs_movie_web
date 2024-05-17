@@ -93,7 +93,7 @@ export const BaseCard = ({
         <HStack>
           <Button
             as={"a"}
-            href={`/movie/details/${id}`}
+            href={`/movies/details/${id}`}
             variant="link"
             colorScheme="blue"
           >

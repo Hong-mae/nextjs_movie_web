@@ -1,12 +1,12 @@
-import { Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { CardList } from "@/components/organisms/CardList";
 import { getMoiveList } from "@/lib/tmdbController";
 
-interface Props {
+interface PathProps {
   params: any;
 }
 
-export const getStaticProps = async ({ params }: Props) => {
+export const getStaticProps = async ({ params }: PathProps) => {
   const { props } = await getMoiveList(params.target);
   return {
     props,
@@ -20,7 +20,6 @@ export const getStaticPaths = async () => {
     }),
   );
 
-  console.log(paths);
   return {
     paths,
     fallback: false,
@@ -34,9 +33,9 @@ interface Props {
 const MovieListPage = ({ list }: Props) => {
   const movies = list.results;
   return (
-    <Container mt={16} maxW={"container.xl"}>
-      <CardList movies={movies} />
-    </Container>
+    <Box as={"main"} mx={"auto"} maxW={"8xl"} px={4}>
+      <CardList movies={movies} />{" "}
+    </Box>
   );
 };
 

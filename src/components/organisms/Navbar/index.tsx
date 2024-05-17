@@ -18,22 +18,23 @@ export const Navbar = () => {
 
   return (
     <Box
-      position={"fixed"}
+      as="header"
+      position={"sticky"}
       top={0}
       left={0}
       right={0}
-      borderBottom={1}
-      borderStyle={"solid"}
-      borderColor={useColorModeValue("teal.600", "white")}
+      width={"full"}
       bg={useColorModeValue("white", "gray.800")}
-      zIndex={1}
+      boxShadow={"sm"}
+      zIndex={11}
     >
-      <Container maxW={"container.xl"}>
+      <Box mx={"auto"} maxW={"8xl"} h={"4.5rem"}>
         <Flex
-          h={16}
           alignItems={"center"}
           justifyContent={"space-between"}
           color={useColorModeValue("teal.600", "white")}
+          w={"100%"}
+          h={"100%"}
         >
           <IconButton
             size={"md"}
@@ -75,7 +76,7 @@ export const Navbar = () => {
             />
           </HStack>
         </Flex>
-      </Container>
+      </Box>
 
       {isOpen ? (
         <Box pb={4} display={{ md: "none" }}>
