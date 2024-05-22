@@ -8,13 +8,23 @@ import {
   Container,
   useColorMode,
   HStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
+import { BiSolidCameraMovie } from "react-icons/bi";
 
-import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import {
+  HamburgerIcon,
+  CloseIcon,
+  MoonIcon,
+  SunIcon,
+  Icon,
+} from "@chakra-ui/icons";
 
 export const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const px = useBreakpointValue({ base: "16px", md: "16px" });
 
   return (
     <Box
@@ -28,7 +38,7 @@ export const Navbar = () => {
       boxShadow={"sm"}
       zIndex={11}
     >
-      <Box mx={"auto"} maxW={"8xl"} h={"4.5rem"}>
+      <Box mx={"auto"} maxW={"8xl"} h={"4.5rem"} px={4}>
         <Flex
           alignItems={"center"}
           justifyContent={"space-between"}
@@ -50,8 +60,13 @@ export const Navbar = () => {
               href="/"
               p={4}
               color={useColorModeValue("teal.600", "white")}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              fontWeight={"bold"}
             >
-              영화보자구!
+              <Icon as={BiSolidCameraMovie} boxSize={8} />
+              Movie
             </Box>
           </HStack>
 

@@ -6,6 +6,7 @@ import {
   position,
   Text,
   useColorModeValue,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { getMoiveList } from "@/lib/tmdbController";
 import Slider from "react-slick";
@@ -28,38 +29,6 @@ interface Props {
   };
 }
 
-const SimpleArrow = (props: any) => {
-  const { type, className, style, onClick } = props;
-
-  if (type === "left") {
-    return (
-      <IconButton
-        aria-label="right_button"
-        icon={
-          <ChevronLeftIcon
-            className={className}
-            style={{ ...style }}
-            onClick={onClick}
-          />
-        }
-      />
-    );
-  } else {
-    return (
-      <IconButton
-        aria-label="left_button"
-        icon={
-          <ChevronRightIcon
-            className={className}
-            style={{ ...style }}
-            onClick={onClick}
-          />
-        }
-      />
-    );
-  }
-};
-
 const index = ({ list }: Props) => {
   const [nav1, setNav1] = useState<Slider | null>();
   const [nav2, setNav2] = useState<Slider | null>();
@@ -77,6 +46,7 @@ const index = ({ list }: Props) => {
     infinite: true,
     slidesToShow: 5,
     speed: 500,
+    arrows: false,
     responsive: [
       {
         breakpoint: 768,
@@ -91,9 +61,10 @@ const index = ({ list }: Props) => {
         },
       },
     ],
-    nextArrow: <SimpleArrow type="right" />,
-    prevArrow: <SimpleArrow type="left" />,
   };
+
+  const top = useBreakpointValue({ base: "50%", md: "50%" });
+  const side = useBreakpointValue({ base: "0%", md: "10px" });
 
   return (
     <Box
@@ -111,73 +82,81 @@ const index = ({ list }: Props) => {
           fade={true}
           className="section"
         >
-          {list.results.map((movie: any) => {
+          {list.results.map((movie: any, index: number) => {
             const imgUrl = `${TMDB_IMAGE_URL}/w200${movie.poster_path}`;
             const backImgUrl = `${TMDB_IMAGE_URL}/w300${movie.backdrop_path}`;
             return (
-              <Box key={movie.title}>
+              <Box key={index}>
                 <Box
-                  w={"100%"}
-                  h={"100%"}
-                  position={"relative"}
-                  p={16}
-                  _before={{
-                    content: "''",
-                    backgroundImage: `url(${backImgUrl})`,
-                    backgroundSize: "cover",
-                    filter: "blur(10px)",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                  }}
-                >
-                  <Box
-                    width={"100%"}
-                    height={"100%"}
-                    borderRadius="md"
-                    bgColor={useColorModeValue(
-                      "rgba(255, 255, 255, 0.5)",
-                      "rgba(0, 0, 0, 0.5)",
-                    )}
-                    position={"relative"}
-                    p={4}
-                    display={"flex"}
-                  >
-                    <Box>
-                      <Image
-                        src={imgUrl}
-                        borderRadius="lg"
-                        objectFit={"cover"}
-                      />
-                    </Box>
-                    <Box>
-                      <Text>{movie.title}</Text>
-                    </Box>
-                  </Box>
+                  height={"2xl"}
+                  backgroundPosition="center"
+                  backgroundRepeat="no-repeat"
+                  backgroundSize="cover"
+                  backgroundImage={`url(${backImgUrl})`}
+                  filter="blur(2px)"
+                />
+                <Box position="absolute" backgroundColor="rgba(0, 0, 0, 0.4)">
+                  {movie.title}
                 </Box>
               </Box>
             );
           })}
         </Slider>
       </Box>
-      <Slider
-        asNavFor={nav1}
-        ref={(slider) => {
-          setNav2(slider);
-        }}
-        {...settings}
-      >
-        {list.results.map((movie: any) => {
-          const imgUrl = `${TMDB_IMAGE_URL}/w300${movie.backdrop_path}`;
-          return (
-            <Box key={movie.title} p={4}>
-              <Image src={imgUrl} borderRadius="lg" objectFit={"cover"} />
-            </Box>
-          );
-        })}
-      </Slider>
+      <Box position={"relative"}>
+        <IconButton
+          aria-label="left-arrow"
+          variant="ghost"
+          position="absolute"
+          left={side}
+          top={top}
+          transform={"translate(0%, -50%)"}
+          zIndex={2}
+          onClick={() => nav2?.slickPrev()}
+          bgColor={useColorModeValue("teal.600", "rgba(174, 174, 174, 0.5)")}
+          color="white"
+          _hover={{
+            bgColor: useColorModeValue("teal.400", "white"),
+          }}
+        >
+          <ChevronLeftIcon boxSize={8} />
+        </IconButton>
+        {/* Right Icon */}
+        <IconButton
+          aria-label="right-arrow"
+          variant="ghost"
+          position="absolute"
+          right={side}
+          top={top}
+          transform={"translate(0%, -50%)"}
+          zIndex={2}
+          onClick={() => nav2?.slickNext()}
+          bgColor={useColorModeValue("teal.600", "rgba(174, 174, 174, 0.5)")}
+          color="white"
+          _hover={{
+            bgColor: useColorModeValue("teal.400", "white"),
+            color: useColorModeValue("white", "black"),
+          }}
+        >
+          <ChevronRightIcon boxSize={8} />
+        </IconButton>
+        <Slider
+          asNavFor={nav1}
+          ref={(slider) => {
+            setNav2(slider);
+          }}
+          {...settings}
+        >
+          {list.results.map((movie: any) => {
+            const imgUrl = `${TMDB_IMAGE_URL}/w300${movie.backdrop_path}`;
+            return (
+              <Box key={movie.title} p={4}>
+                <Image src={imgUrl} borderRadius="lg" objectFit={"cover"} />
+              </Box>
+            );
+          })}
+        </Slider>
+      </Box>
     </Box>
   );
 };
