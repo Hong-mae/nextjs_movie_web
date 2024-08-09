@@ -35,6 +35,7 @@ export const Navbar = () => {
           color={useColorModeValue("teal.600", "white")}
           w={"100%"}
           h={"100%"}
+          px={4}
         >
           <IconButton
             size={"md"}

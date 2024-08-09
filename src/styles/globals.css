@@ -92,11 +92,3 @@ a {
     color-scheme: dark;
   }
 }
-
-.center .slick-slide {
-  filter: blur(1px);
-}
-
-.center .slick-center {
-  filter: blur(0px);
-}

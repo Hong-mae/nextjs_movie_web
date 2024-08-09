@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -34,51 +35,54 @@ export const BaseCard = ({
   release_date,
   id,
 }: CardProps) => {
-  const imgUrl =
-    poster_path.indexOf("no_image.png") !== -1
-      ? poster_path
+  let imgUrl = poster_path ?? `/no_image.png`;
+  imgUrl =
+    imgUrl.indexOf("no_image.png") !== -1
+      ? imgUrl
       : `${TMDB_IMAGE_URL}/w400${poster_path}`;
 
   return (
     <Card maxW="md">
       <CardBody>
         <Flex
-          alignItems={"flex-start"}
-          justifyContent={"center"}
-          minH={"300px"}
+          flexDirection={"column"}
+          justifyContent={"space-between"}
+          height={"100%"}
         >
-          <Image
-            src={imgUrl}
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-          />
-        </Flex>
-        <Stack mt="6" spacing="3">
-          <Heading
-            size="md"
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {title}
-          </Heading>
-          <Text
-            style={{
-              whiteSpace: "normal",
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-            }}
-            minH={"72px"}
-          >
-            {overview ? overview : "등록된 정보가 없습니다."}
-          </Text>
-        </Stack>
-        <Flex alignItems={"center"} justifyContent={"end"} color={"gray.400"}>
-          <Text>{release_date}</Text>
+          <Flex flex={3} alignItems={"flex-start"} justifyContent={"center"}>
+            <Image src={imgUrl} alt={title} borderRadius="lg" h={"100%"} />
+          </Flex>
+          <Stack flex={1} mt={4}>
+            <Heading
+              size="md"
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {title}
+            </Heading>
+            <Text
+              style={{
+                whiteSpace: "normal",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                overflow: "hidden",
+              }}
+              minH={"72px"}
+            >
+              {overview ? overview : "등록된 정보가 없습니다."}
+            </Text>
+            <Flex
+              alignItems={"center"}
+              justifyContent={"end"}
+              color={"gray.400"}
+            >
+              <Text>{release_date}</Text>
+            </Flex>
+          </Stack>
         </Flex>
       </CardBody>
       <Divider color={useColorModeValue("teal.600", "white")} />

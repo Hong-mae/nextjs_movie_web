@@ -6,12 +6,13 @@ import {
   position,
   Text,
   useColorModeValue,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { getMoiveList } from "@/lib/tmdbController";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
 const TMDB_IMAGE_URL = process.env.NEXT_PUBLIC_TMBD_IMAGE_BASE_URL;
 
@@ -28,48 +29,17 @@ interface Props {
   };
 }
 
-const SimpleArrow = (props: any) => {
-  const { type, className, style, onClick } = props;
-
-  if (type === "left") {
-    return (
-      <IconButton
-        aria-label="right_button"
-        icon={
-          <ChevronLeftIcon
-            className={className}
-            style={{ ...style }}
-            onClick={onClick}
-          />
-        }
-      />
-    );
-  } else {
-    return (
-      <IconButton
-        aria-label="left_button"
-        icon={
-          <ChevronRightIcon
-            className={className}
-            style={{ ...style }}
-            onClick={onClick}
-          />
-        }
-      />
-    );
+const imgConvert = (imgUrl: string, size: number | string) => {
+  if (imgUrl === null || imgUrl === undefined) {
+    return "/no_image.png";
   }
+
+  return `${TMDB_IMAGE_URL}/${typeof size === "number" ? `w${size}` : `${size}`}${imgUrl}`;
 };
 
 const index = ({ list }: Props) => {
   const [nav1, setNav1] = useState<Slider | null>();
   const [nav2, setNav2] = useState<Slider | null>();
-  // let sliderRef1 = useRef<unknown>(null);
-  // let sliderRef2 = useRef<Slider>(null);
-
-  // useEffect(() => {
-  //   setNav1(sliderRef1);
-  //   setNav2(sliderRef2);
-  // }, []);
 
   const settings = {
     className: "center",
@@ -91,8 +61,7 @@ const index = ({ list }: Props) => {
         },
       },
     ],
-    nextArrow: <SimpleArrow type="right" />,
-    prevArrow: <SimpleArrow type="left" />,
+    arrows: false,
   };
 
   return (
@@ -103,7 +72,7 @@ const index = ({ list }: Props) => {
       maxW={"8xl"}
       px={4}
     >
-      <Box borderRadius={16} overflow={"hidden"}>
+      <Box borderRadius={8} overflow={"hidden"}>
         <Slider
           asNavFor={nav2}
           ref={(slider) => setNav1(slider)}
@@ -112,72 +81,103 @@ const index = ({ list }: Props) => {
           className="section"
         >
           {list.results.map((movie: any) => {
-            const imgUrl = `${TMDB_IMAGE_URL}/w200${movie.poster_path}`;
-            const backImgUrl = `${TMDB_IMAGE_URL}/w300${movie.backdrop_path}`;
+            const imgUrl = imgConvert(movie.poster_path, 342);
+            const backImgUrl = imgConvert(movie.backdrop_path, "original");
             return (
-              <Box key={movie.title}>
+              <Box
+                key={movie.title}
+                position={"relative"}
+                display={"block !important"}
+              >
+                <Box>
+                  <Image src={`${backImgUrl}`} />
+                </Box>
                 <Box
-                  w={"100%"}
-                  h={"100%"}
-                  position={"relative"}
-                  p={16}
-                  _before={{
-                    content: "''",
-                    backgroundImage: `url(${backImgUrl})`,
-                    backgroundSize: "cover",
-                    filter: "blur(10px)",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                  }}
+                  borderRadius="md"
+                  p={4}
+                  display={"flex"}
+                  position={"absolute"}
+                  top={"50%"}
+                  left={16}
+                  right={16}
+                  bgColor={useColorModeValue(
+                    "rgba(255, 255, 255, 0.5)",
+                    "rgba(0, 0, 0, 0.5)",
+                  )}
+                  transform={"translate(0, -50%)"}
                 >
-                  <Box
-                    width={"100%"}
-                    height={"100%"}
-                    borderRadius="md"
-                    bgColor={useColorModeValue(
-                      "rgba(255, 255, 255, 0.5)",
-                      "rgba(0, 0, 0, 0.5)",
-                    )}
-                    position={"relative"}
-                    p={4}
-                    display={"flex"}
-                  >
-                    <Box>
-                      <Image
-                        src={imgUrl}
-                        borderRadius="lg"
-                        objectFit={"cover"}
-                      />
-                    </Box>
-                    <Box>
-                      <Text>{movie.title}</Text>
-                    </Box>
+                  <Box>
+                    <Image src={imgUrl} borderRadius="md" objectFit={"cover"} />
+                  </Box>
+                  <Box>
+                    <Text>{movie.title}</Text>
                   </Box>
                 </Box>
+                {/* </Box> */}
               </Box>
             );
           })}
         </Slider>
       </Box>
-      <Slider
-        asNavFor={nav1}
-        ref={(slider) => {
-          setNav2(slider);
-        }}
-        {...settings}
-      >
-        {list.results.map((movie: any) => {
-          const imgUrl = `${TMDB_IMAGE_URL}/w300${movie.backdrop_path}`;
-          return (
-            <Box key={movie.title} p={4}>
-              <Image src={imgUrl} borderRadius="lg" objectFit={"cover"} />
-            </Box>
-          );
-        })}
-      </Slider>
+
+      <Box position={"relative"}>
+        {/* Left Icon */}
+        <IconButton
+          aria-label="left-arrow"
+          position="absolute"
+          left={"0"}
+          top={"50%"}
+          transform={"translate(0%, -50%)"}
+          zIndex={2}
+          onClick={() => nav2?.slickPrev()}
+          h={"100%"}
+          px={4}
+          bg={useColorModeValue(
+            "linear-gradient(90deg, rgba(255, 255, 255, 0.8) 0%, rgba(0,0,0,0) 100%);",
+            "linear-gradient(90deg, rgba(0,0,0,0.5) 0%, rgba(255,255,255,0) 100%);",
+          )}
+        >
+          <BiLeftArrowAlt size="40px" />
+        </IconButton>
+        {/* Right Icon */}
+        <IconButton
+          aria-label="right-arrow"
+          position="absolute"
+          right={"0"}
+          top={"50%"}
+          transform={"translate(0%, -50%)"}
+          zIndex={2}
+          onClick={() => nav2?.slickNext()}
+          h={"100%"}
+          px={4}
+          // bg={
+          //   "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.5) 100%);"
+          // }
+          bg={useColorModeValue(
+            "linear-gradient(90deg, rgba(0,0,0,0.0) 0%, rgba(255,255,255,0.8) 100%);",
+            "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.5) 100%);",
+          )}
+        >
+          <BiRightArrowAlt size="40px" />
+        </IconButton>
+
+        <Slider
+          asNavFor={nav1}
+          ref={(slider) => {
+            setNav2(slider);
+          }}
+          {...settings}
+        >
+          {list.results.map((movie: any) => {
+            const backImgUrl = imgConvert(movie.backdrop_path, 300);
+            return (
+              <Box key={movie.title} p={4}>
+                <Image src={backImgUrl} borderRadius="lg" objectFit={"cover"} />
+              </Box>
+            );
+          })}
+        </Slider>
+      </Box>
     </Box>
   );
 };
