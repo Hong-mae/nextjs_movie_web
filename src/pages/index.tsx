@@ -47,6 +47,7 @@ const index = ({ list }: Props) => {
     infinite: true,
     slidesToShow: 5,
     speed: 500,
+    arrows: false,
     responsive: [
       {
         breakpoint: 768,
@@ -63,6 +64,9 @@ const index = ({ list }: Props) => {
     ],
     arrows: false,
   };
+
+  const top = useBreakpointValue({ base: "50%", md: "50%" });
+  const side = useBreakpointValue({ base: "0%", md: "10px" });
 
   return (
     <Box
