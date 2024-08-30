@@ -38,7 +38,7 @@ export const Navbar = () => {
       boxShadow={"sm"}
       zIndex={11}
     >
-      <Box mx={"auto"} maxW={"8xl"} h={"4.5rem"} px={4}>
+      <Box mx={"auto"} maxW={"8xl"} h={"4.5rem"}>
         <Flex
           alignItems={"center"}
           justifyContent={"space-between"}
@@ -67,7 +67,6 @@ export const Navbar = () => {
               fontWeight={"bold"}
             >
               <Icon as={BiSolidCameraMovie} boxSize={8} />
-              Movie
             </Box>
           </HStack>
 

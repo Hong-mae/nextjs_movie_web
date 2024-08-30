@@ -1,4 +1,4 @@
-import { getMovieDetails } from "@/lib/tmdbController";
+import { getMovieInfo } from "@/lib/tmdbController";
 import { Box, Image } from "@chakra-ui/react";
 import React from "react";
 
@@ -10,7 +10,7 @@ interface PathProps {
 
 export const getServerSideProps = async ({ params }: PathProps) => {
   const { movie_id } = params;
-  const { props } = await getMovieDetails(movie_id);
+  const { props } = await getMovieInfo(movie_id, ["videos"]);
 
   return {
     props,
@@ -18,13 +18,24 @@ export const getServerSideProps = async ({ params }: PathProps) => {
 };
 
 interface Props {
-  details: any;
+  adult: any;
+  videos: any;
+  vote_average: any;
+  status: any;
+  title: any;
+  tagline: any;
+  overview: any;
+  genres: any;
+  belongs_to_collections: any;
+  production_companies: any;
+  poster_path: any;
+  backdrop_path: any;
 }
 
-export const MovieDetail = ({ details }: Props) => {
+export const MovieDetail = (props: Props) => {
   const {
     adult,
-    video,
+    videos,
     vote_average,
     status,
     title,
@@ -35,7 +46,7 @@ export const MovieDetail = ({ details }: Props) => {
     production_companies,
     poster_path,
     backdrop_path,
-  } = details;
+  } = props;
 
   const posterImg = `${TMDB_IMAGE_URL}/w400${poster_path}`;
   const backImg = `${TMDB_IMAGE_URL}/original${backdrop_path}`;
