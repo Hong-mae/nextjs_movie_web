@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Header from "../organisms/Header";
+import { CssBaseline } from "@mui/material";
 
 const Layout = ({ children }: React.PropsWithChildren) => {
   return (
@@ -12,6 +13,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <CssBaseline />
         <Header />
         {children}
       </main>

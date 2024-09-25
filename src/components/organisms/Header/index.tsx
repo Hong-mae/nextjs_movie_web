@@ -1,38 +1,122 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MovieFilter from "@mui/icons-material/MovieFilter";
+import { MovieFilter } from "@mui/icons-material";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Link,
+  Toolbar,
+  useScrollTrigger,
+} from "@mui/material";
+import React, { useState } from "react";
 
-const navItems = ["상영 중", "인기 영화", "최고 평점", "개봉 예정"];
+interface Props {
+  window?: () => Window;
+  children?: React.ReactElement<any>;
+  // custom props
+  threshold?: number;
+  bgColorBefore?: string;
+  bgColorAfter?: string;
+  txtColorBefore?: string;
+  txtColorAfter?: string;
+  fadeIn?: string;
+  fadeOut?: string;
+  paddingBefore?: string;
+  paddingAfter?: string;
+}
 
-export default function Header() {
+// const navItems = ["상영 중", "인기 영화", "최고 평점", "개봉 예정"];
+const navItems = [
+  {
+    title: "상영 중",
+    href: "/",
+  },
+  {
+    title: "인기 영화",
+    href: "/movie/popular",
+  },
+  {
+    title: "최고 평점",
+    href: "/movie/top_rated",
+  },
+  {
+    title: "개봉 예정",
+    href: "/movie/upcoming",
+  },
+];
+const ElevationScroll = (props: Props) => {
+  const {
+    window,
+    children,
+    threshold = 0,
+    bgColorBefore = "transparent",
+    bgColorAfter = "#303030",
+    fadeIn = "0.5s ease-in",
+    fadeOut = "0.5s ease-out",
+    paddingBefore = "1.5rem",
+    paddingAfter = "0",
+  } = props;
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: threshold,
+    target: window ? window() : undefined,
+  });
+
+  return children
+    ? React.cloneElement(children, {
+        elevation: 0,
+        style: {
+          color: "white",
+          transition: trigger ? fadeIn : fadeOut,
+          padding: trigger ? `${paddingAfter} 0` : `${paddingBefore} 0`,
+          backgroundColor: trigger ? bgColorAfter : bgColorBefore,
+          backgroundImage:
+            "linear-gradient(180deg, rgba(48,48,48,1), transparent)",
+        },
+      })
+    : null;
+};
+
+const Header = (props: Props) => {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+    <ElevationScroll {...props}>
+      <AppBar>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MovieFilter />
-          </IconButton>
+          <Link href="/" sx={{ color: "inherit" }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            >
+              <MovieFilter />
+            </IconButton>
+          </Link>
           <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "end" }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
-              </Button>
+            {navItems.map((item, i) => (
+              <Link key={i} href={item.href} sx={{ color: "inherit" }}>
+                <Button key={item.title} sx={{ color: "inherit" }}>
+                  {item.title}
+                </Button>
+              </Link>
             ))}
           </Box>
-          <Button color="inherit">Login</Button>
+          {loggedIn ? (
+            <Link href="/logout" color="inherit">
+              <Button color="inherit">Logout</Button>
+            </Link>
+          ) : (
+            <Link href="/login" color="inherit">
+              <Button color="inherit">Login</Button>
+            </Link>
+          )}
         </Toolbar>
       </AppBar>
-    </Box>
+    </ElevationScroll>
   );
-}
+};
+
+export default Header;
