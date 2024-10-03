@@ -15,6 +15,7 @@ import {
 } from "@/utils/tmdbController";
 import CardList from "@/components/organisms/CardList";
 import { Info } from "@mui/icons-material";
+import Carousel from "@/components/organisms/Carousel";
 
 export const getServerSideProps = async () => {
   const { list } = await getMovieList("now_playing");
@@ -32,7 +33,7 @@ export const getServerSideProps = async () => {
 
 interface Props {
   list: {
-    results: ReadonlyArray<object>;
+    results: ReadonlyArray<MovieInfoProps>;
   };
   info: any;
 }
@@ -133,7 +134,8 @@ const Home = ({ list: { results }, info }: Props) => {
         </Container>
       </Box>
 
-      <CardList list={results} />
+      {/* <CardList list={results} /> */}
+      <Carousel items={results} />
     </Box>
   );
 };
