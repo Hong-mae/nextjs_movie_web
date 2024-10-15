@@ -6,6 +6,7 @@ import {
   Container,
   Toolbar,
   Typography,
+  Link,
 } from "@mui/material";
 
 import {
@@ -13,42 +14,50 @@ import {
   getMovieInfo,
   getMovieList,
 } from "@/utils/tmdbController";
-import CardList from "@/components/organisms/CardList";
 import { Info } from "@mui/icons-material";
 import Carousel from "@/components/organisms/Carousel";
+import now_playing from "./movie/now_playing";
 
 export const getServerSideProps = async () => {
-  const { list } = await getMovieList("now_playing");
-  const { info } = await getMovieInfo(list.results[0].id, ["videos"]);
+  const { list: now_playing } = await getMovieList("now_playing");
+  const { list: popular } = await getMovieList("popular");
+  const { list: top_rated } = await getMovieList("top_rated");
+  const { list: upcoming } = await getMovieList("upcoming");
 
-  list.results = list.results.filter((_: any, i: any) => i != 0);
+  const { info } = await getMovieInfo(now_playing.results[0].id, ["videos"]);
+
+  now_playing.results = now_playing.results.filter((_: any, i: any) => i != 0);
 
   return {
     props: {
-      list,
+      now_playing,
+      popular,
+      top_rated,
+      upcoming,
       info,
     },
   };
 };
 
 interface Props {
-  list: {
-    results: ReadonlyArray<MovieInfoProps>;
-  };
+  now_playing: any;
+  popular: any;
+  top_rated: any;
+  upcoming: any;
   info: any;
 }
 
-const Home = ({ list: { results }, info }: Props) => {
+const Home = ({ now_playing, popular, top_rated, upcoming, info }: Props) => {
   const mainImgUrl = getImageUrl(info.backdrop_path, "original");
 
   return (
     <Box>
-      <Box height={"90vh"} position={"relative"}>
+      <Box position={"relative"}>
         <img
           src={mainImgUrl}
           alt={info.title}
           loading="lazy"
-          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          style={{ width: "100%", objectFit: "cover" }}
         />
 
         <Container
@@ -64,7 +73,6 @@ const Home = ({ list: { results }, info }: Props) => {
           <Box
             sx={{
               maxWidth: "500px",
-              padding: "1rem",
             }}
           >
             <Box>
@@ -135,7 +143,82 @@ const Home = ({ list: { results }, info }: Props) => {
       </Box>
 
       {/* <CardList list={results} /> */}
-      <Carousel items={results} />
+
+      {/* 상영 중인 작품 */}
+      <Container maxWidth="xl">
+        <Box margin="1.5rem 0">
+          <Link
+            variant="h4"
+            underline="none"
+            color="inherit"
+            href="/movie/now_playing"
+            sx={{
+              display: "inline-block",
+              mb: "0.5rem",
+            }}
+          >
+            상영중인 영화
+          </Link>
+          <Carousel items={now_playing.results} />
+        </Box>
+      </Container>
+
+      {/* 인기 영화 */}
+      <Container maxWidth="xl">
+        <Box margin="1.5rem 0">
+          <Link
+            variant="h4"
+            underline="none"
+            color="inherit"
+            href="/movie/popular"
+            sx={{
+              display: "inline-block",
+              mb: "0.5rem",
+            }}
+          >
+            인기 영화
+          </Link>
+          <Carousel items={popular.results} />
+        </Box>
+      </Container>
+
+      {/* 평점 높은 작품 */}
+      <Container maxWidth="xl">
+        <Box margin="1.5rem 0">
+          <Link
+            variant="h4"
+            underline="none"
+            color="inherit"
+            href="/movie/top_rated"
+            sx={{
+              display: "inline-block",
+              mb: "0.5rem",
+            }}
+          >
+            평점 높은 영화
+          </Link>
+          <Carousel items={top_rated.results} />
+        </Box>
+      </Container>
+
+      {/* 개봉 예정 영화 */}
+      <Container maxWidth="xl">
+        <Box margin="1.5rem 0">
+          <Link
+            variant="h4"
+            underline="none"
+            color="inherit"
+            href="/movie/upcoming"
+            sx={{
+              display: "inline-block",
+              mb: "0.5rem",
+            }}
+          >
+            최근 개봉 or 예정 영화
+          </Link>
+          <Carousel items={upcoming.results} />
+        </Box>
+      </Container>
     </Box>
   );
 };
