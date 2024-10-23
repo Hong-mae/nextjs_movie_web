@@ -1,14 +1,10 @@
 import React from "react";
 import {
-  Button,
   CardActionArea,
-  CardActions,
   CardContent,
   CardMedia,
   Card as MCard,
   Typography,
-  CardMediaProps,
-  styled,
 } from "@mui/material";
 import { getImageUrl } from "@/utils/tmdbController";
 
@@ -16,25 +12,26 @@ interface Props {
   poster_path?: string;
   title?: string;
   overview?: string;
+  id?: number;
 }
 
-const CustomCardMedia = styled(CardMedia)<CardMediaProps>(({ theme }) => ({
-  [theme.breakpoints.down("sm")]: {
-    backgroundColor: "#ff0",
-  },
-  [theme.breakpoints.up("sm")]: {
-    backgroundColor: "#f00",
-  },
-  [theme.breakpoints.up("md")]: {
-    backgroundColor: "#0f0", // 425px
-  },
-  [theme.breakpoints.up("lg")]: {
-    backgroundColor: "#00f",
-  },
-}));
+// const CardMedia = styled(CardMedia)<CardMediaProps>(({ theme }) => ({
+//   [theme.breakpoints.down("sm")]: {
+//     backgroundColor: "#ff0",
+//   },
+//   [theme.breakpoints.up("sm")]: {
+//     backgroundColor: "#f00",
+//   },
+//   [theme.breakpoints.up("md")]: {
+//     backgroundColor: "#0f0", // 425px
+//   },
+//   [theme.breakpoints.up("lg")]: {
+//     backgroundColor: "#00f",
+//   },
+// }));
 
 const Card = (props: Props) => {
-  const { title, overview, poster_path = "/no_img.png" } = props;
+  const { title, overview, poster_path = "/no_img.png", id } = props;
   const moviePoster = getImageUrl(poster_path, 342);
 
   return (
@@ -44,8 +41,8 @@ const Card = (props: Props) => {
         boxShadow: "1px 2px 5px 0px",
       }}
     >
-      <CardActionArea sx={{ p: 2 }}>
-        <CustomCardMedia
+      <CardActionArea sx={{ p: 2 }} href={`/movie/details/${id}`}>
+        <CardMedia
           component="img"
           image={moviePoster}
           sx={{
@@ -75,9 +72,10 @@ const Card = (props: Props) => {
               display: "-webkit-box",
               WebkitLineClamp: "3",
               WebkitBoxOrient: "vertical",
+              height: "60px",
             }}
           >
-            {overview}
+            {overview ? overview : "등록된 정보가 없습니다."}
           </Typography>
         </CardContent>
       </CardActionArea>

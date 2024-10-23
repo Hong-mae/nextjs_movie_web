@@ -29,7 +29,7 @@ interface Props {
 const navItems = [
   {
     title: "상영 중",
-    href: "/",
+    href: "/movie/now_playing",
   },
   {
     title: "인기 영화",
