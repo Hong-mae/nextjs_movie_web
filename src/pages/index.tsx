@@ -15,10 +15,9 @@ import {
   getMovieList,
 } from "@/utils/tmdbController";
 import { Info } from "@mui/icons-material";
-import Carousel from "@/components/organisms/Carousel";
-import now_playing from "./movie/now_playing";
+import MovieCarousel from "@/components/organisms/MovieCarousel";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const { list: now_playing } = await getMovieList("now_playing");
   const { list: popular } = await getMovieList("popular");
   const { list: top_rated } = await getMovieList("top_rated");
@@ -26,7 +25,7 @@ export const getServerSideProps = async () => {
 
   const { info } = await getMovieInfo(now_playing.results[0].id, ["videos"]);
 
-  now_playing.results = now_playing.results.filter((_: any, i: any) => i != 0);
+  // now_playing.results = now_playing.results.filter((_: any, i: any) => i != 0);
 
   return {
     props: {
@@ -52,19 +51,24 @@ const Home = ({ now_playing, popular, top_rated, upcoming, info }: Props) => {
 
   return (
     <Box>
-      <Box position={"relative"}>
+      <Box sx={{ position: "relative", height: "50vw" }}>
         <img
           src={mainImgUrl}
           alt={info.title}
           loading="lazy"
-          style={{ width: "100%", objectFit: "cover" }}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
         />
 
         <Container
           maxWidth="xl"
           sx={{
-            position: "absolute",
             color: "white",
+            position: "absolute",
             bottom: 0,
             left: 0,
             right: 0,
@@ -102,8 +106,7 @@ const Home = ({ now_playing, popular, top_rated, upcoming, info }: Props) => {
                 justifyContent: "end",
                 alignItems: "center",
                 color: "white",
-                px: 2,
-                py: 1,
+                py: 2,
               }}
             >
               <Box
@@ -145,80 +148,28 @@ const Home = ({ now_playing, popular, top_rated, upcoming, info }: Props) => {
       {/* <CardList list={results} /> */}
 
       {/* 상영 중인 작품 */}
-      <Container maxWidth="xl">
-        <Box margin="1.5rem 0">
-          <Link
-            variant="h4"
-            underline="none"
-            color="inherit"
-            href="/movie/now_playing"
-            sx={{
-              display: "inline-block",
-              mb: "0.5rem",
-            }}
-          >
-            상영중인 영화
-          </Link>
-          <Carousel items={now_playing.results} />
-        </Box>
-      </Container>
+      <MovieCarousel
+        title="상영중인 영화"
+        href="now_playing"
+        lists={now_playing}
+      />
 
       {/* 인기 영화 */}
-      <Container maxWidth="xl">
-        <Box margin="1.5rem 0">
-          <Link
-            variant="h4"
-            underline="none"
-            color="inherit"
-            href="/movie/popular"
-            sx={{
-              display: "inline-block",
-              mb: "0.5rem",
-            }}
-          >
-            인기 영화
-          </Link>
-          <Carousel items={popular.results} />
-        </Box>
-      </Container>
+      <MovieCarousel title="인기 영화" href="popular" lists={popular} />
 
       {/* 평점 높은 작품 */}
-      <Container maxWidth="xl">
-        <Box margin="1.5rem 0">
-          <Link
-            variant="h4"
-            underline="none"
-            color="inherit"
-            href="/movie/top_rated"
-            sx={{
-              display: "inline-block",
-              mb: "0.5rem",
-            }}
-          >
-            평점 높은 영화
-          </Link>
-          <Carousel items={top_rated.results} />
-        </Box>
-      </Container>
+      <MovieCarousel
+        title="평점 높은 영화"
+        href="top_rated"
+        lists={top_rated}
+      />
 
       {/* 개봉 예정 영화 */}
-      <Container maxWidth="xl">
-        <Box margin="1.5rem 0">
-          <Link
-            variant="h4"
-            underline="none"
-            color="inherit"
-            href="/movie/upcoming"
-            sx={{
-              display: "inline-block",
-              mb: "0.5rem",
-            }}
-          >
-            최근 개봉 or 예정 영화
-          </Link>
-          <Carousel items={upcoming.results} />
-        </Box>
-      </Container>
+      <MovieCarousel
+        title="최신 or 개봉 예정 영화"
+        href="upcoming"
+        lists={upcoming}
+      />
     </Box>
   );
 };
