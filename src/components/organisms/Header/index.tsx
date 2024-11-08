@@ -23,6 +23,7 @@ interface Props {
   fadeOut?: string;
   paddingBefore?: string;
   paddingAfter?: string;
+  isMain?: boolean;
 }
 
 // const navItems = ["상영 중", "인기 영화", "최고 평점", "개봉 예정"];
@@ -55,6 +56,7 @@ const ElevationScroll = (props: Props) => {
     fadeOut = "0.5s ease-out",
     paddingBefore = "1.5rem",
     paddingAfter = "0",
+    isMain = true,
   } = props;
 
   const trigger = useScrollTrigger({
@@ -63,19 +65,35 @@ const ElevationScroll = (props: Props) => {
     target: window ? window() : undefined,
   });
 
-  return children
-    ? React.cloneElement(children, {
-        elevation: 0,
-        style: {
-          color: "white",
-          transition: trigger ? fadeIn : fadeOut,
-          padding: trigger ? `${paddingAfter} 0` : `${paddingBefore} 0`,
-          backgroundColor: trigger ? bgColorAfter : bgColorBefore,
-          backgroundImage:
-            "linear-gradient(180deg, rgba(48,48,48,1), transparent)",
-        },
-      })
-    : null;
+  let nav = null;
+
+  if (isMain) {
+    nav = children
+      ? React.cloneElement(children, {
+          elevation: 0,
+          style: {
+            color: "white",
+            transition: trigger ? fadeIn : fadeOut,
+            padding: trigger ? `${paddingAfter} 0` : `${paddingBefore} 0`,
+            backgroundColor: trigger ? bgColorAfter : bgColorBefore,
+            backgroundImage:
+              "linear-gradient(180deg, rgba(48,48,48,1), transparent)",
+          },
+        })
+      : null;
+  } else {
+    nav = children
+      ? React.cloneElement(children, {
+          elevation: 0,
+          style: {
+            color: "white",
+            backgroundColor: bgColorAfter,
+          },
+        })
+      : null;
+  }
+
+  return nav;
 };
 
 const Header = (props: Props) => {

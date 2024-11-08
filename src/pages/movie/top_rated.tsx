@@ -1,5 +1,6 @@
 import CardList from "@/components/organisms/CardList";
 import { getMovieList } from "@/utils/tmdbController";
+import { Toolbar } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
@@ -23,6 +24,7 @@ const top_rated = ({ top_rated }: Props) => {
       <Head>
         <title>Top Rated | Watch Movie</title>
       </Head>
+      <Toolbar />
       <CardList list={top_rated.results} />
     </>
   );

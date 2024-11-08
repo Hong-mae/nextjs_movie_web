@@ -17,7 +17,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
       </Head>
       <main>
         <CssBaseline />
-        <Header />
+        <Header isMain={false} />
         {children}
       </main>
     </>

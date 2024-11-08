@@ -1,5 +1,6 @@
 import CardList from "@/components/organisms/CardList";
 import { getMovieList } from "@/utils/tmdbController";
+import { AppBar, Box, Toolbar } from "@mui/material";
 import Head from "next/head";
 import React from "react";
 
@@ -23,7 +24,10 @@ const now_playing = ({ now_playing }: Props) => {
       <Head>
         <title>Now Playing | Watch Movie</title>
       </Head>
-      <CardList list={now_playing.results} />
+      <Box>
+        <Toolbar />
+        <CardList list={now_playing.results} />
+      </Box>
     </>
   );
 };
