@@ -8,6 +8,7 @@ import {
   Toolbar,
   useScrollTrigger,
 } from "@mui/material";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
 interface Props {
@@ -96,11 +97,25 @@ const ElevationScroll = (props: Props) => {
   return nav;
 };
 
+const Navbar = () => {
+  return <></>;
+};
+
 const Header = (props: Props) => {
   const [loggedIn, setLoggedIn] = useState(false);
+
+  const logout = () => {
+    setLoggedIn(false);
+    window.location.href = "/";
+  };
+
+  const login = () => {
+    setLoggedIn(true);
+    window.location.href = "/login";
+  };
   return (
     <ElevationScroll {...props}>
-      <AppBar>
+      <AppBar component={"nav"}>
         <Toolbar>
           <Link href="/" sx={{ color: "inherit" }}>
             <IconButton
@@ -113,7 +128,17 @@ const Header = (props: Props) => {
               <MovieFilter />
             </IconButton>
           </Link>
-          <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "end" }}>
+
+          <Box
+            sx={{
+              display: {
+                xs: "none",
+                sm: "flex",
+              },
+              flexGrow: 1,
+              justifyContent: "end",
+            }}
+          >
             {navItems.map((item, i) => (
               <Link key={i} href={item.href} sx={{ color: "inherit" }}>
                 <Button key={item.title} sx={{ color: "inherit" }}>
@@ -121,16 +146,16 @@ const Header = (props: Props) => {
                 </Button>
               </Link>
             ))}
+            {loggedIn ? (
+              <Button variant="text" color="inherit" onClick={logout}>
+                Logout
+              </Button>
+            ) : (
+              <Button variant="text" color="inherit" onClick={login}>
+                Login
+              </Button>
+            )}
           </Box>
-          {loggedIn ? (
-            <Link href="/logout" color="inherit">
-              <Button color="inherit">Logout</Button>
-            </Link>
-          ) : (
-            <Link href="/login" color="inherit">
-              <Button color="inherit">Login</Button>
-            </Link>
-          )}
         </Toolbar>
       </AppBar>
     </ElevationScroll>

@@ -32,7 +32,7 @@ export const getMovieList = async (target: string) => {
 };
 
 export const getMovieInfo = async (
-  movie_id: number,
+  movie_id: string | number,
   target: Array<String>,
   kr: boolean = true
 ) => {
@@ -45,9 +45,12 @@ export const getMovieInfo = async (
       }
     : {
         append_to_response,
+        include_image_language: "ko,en",
+        language: "ko-KR",
       };
 
   const url = `${TMDB_MOVIE_URL}/${movie_id}`;
+
   const info = await axios.get(url, {
     params,
     headers: {

@@ -25,8 +25,11 @@ const NextArrow = (props: ComponentProps<"button">) => {
         top: 0,
         bottom: 0,
         zIndex: 1000,
-        background:
-          "linear-gradient(270deg, rgba(0,0,0,1) , rgba(255,255,255,0))",
+        ":hover": {
+          transition: "ease-in-out 2.5s",
+          background:
+            "linear-gradient(270deg, rgba(0,0,0,1) , rgba(255,255,255,0))",
+        },
       }}
     >
       <NavigateNext />
@@ -47,8 +50,10 @@ const PrevArrow = (props: ComponentProps<"button">) => {
         top: 0,
         bottom: 0,
         zIndex: 1000,
-        background:
-          "linear-gradient(270deg, rgba(255,255,255,0) , rgba(0,0,0,1))",
+        ":hover": {
+          background:
+            "linear-gradient(270deg, rgba(255,255,255,0) , rgba(0,0,0,1))",
+        },
       }}
     >
       <NavigateBefore />
@@ -95,7 +100,7 @@ const Carousel = ({ items }: Props) => {
       <Slider {...settings}>
         {items.map((e, i) => {
           const imgUrl = getImageUrl(e.backdrop_path, 780);
-          return <ImageCard key={i} imgUrl={imgUrl} title={e.title} />;
+          return <ImageCard key={i} imgUrl={imgUrl} {...e} />;
         })}
       </Slider>
     </Box>
