@@ -163,14 +163,14 @@ const Home = ({ now_playing, popular, top_rated, upcoming, info }: Props) => {
 
       {/* 평점 높은 작품 */}
       <MovieCarousel
-        title="평점 높은 영화"
+        title="역대 평점 높은 영화"
         href="top_rated"
         lists={top_rated}
       />
 
       {/* 개봉 예정 영화 */}
       <MovieCarousel
-        title="최신 or 개봉 예정 영화"
+        title="곧 개봉하는 영화"
         href="upcoming"
         lists={upcoming}
       />

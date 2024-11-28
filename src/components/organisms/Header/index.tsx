@@ -42,7 +42,7 @@ const navItems = [
     href: "/movie/top_rated",
   },
   {
-    title: "개봉 예정",
+    title: "개봉 임박",
     href: "/movie/upcoming",
   },
 ];

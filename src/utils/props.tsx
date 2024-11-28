@@ -12,6 +12,7 @@ interface MovieListsProps {
 interface MovieInfoProps {
   adult: boolean;
   backdrop_path: string;
+  profile_path: string;
   genre_ids: ReadonlyArray<number>;
   id: number;
   original_language: string;
@@ -24,4 +25,6 @@ interface MovieInfoProps {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  tagline: string;
+  status: string;
 }
