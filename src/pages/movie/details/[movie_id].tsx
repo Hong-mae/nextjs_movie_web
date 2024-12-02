@@ -9,6 +9,8 @@ import { GetServerSidePropsContext } from "next";
 import {
   AppBar,
   Box,
+  Button,
+  Chip,
   Container,
   Divider,
   Grid2 as Grid,
@@ -19,6 +21,8 @@ import {
   Typography,
 } from "@mui/material";
 import Error from "next/error";
+import TmdbStatus from "../../../utils/data.json";
+import Head from "next/head";
 
 interface Props extends MovieInfoProps {
   videos: ReadonlyArray<object>;
@@ -50,6 +54,11 @@ export const getServerSideProps = async (
   );
 
   const { backdrops, posters, logos } = info.images;
+
+  delete info.images;
+  delete info.videos;
+
+  console.log(info);
 
   return {
     props: {
@@ -83,6 +92,7 @@ const info = ({
   backdrop_path,
   overview,
   vote_average,
+  genres,
   errorCode,
 }: Props) => {
   if (errorCode) return <Error statusCode={errorCode} title="Invalid Value" />;
@@ -90,8 +100,13 @@ const info = ({
   const mainPoster = getImageUrl(poster_path, 342);
   const backdrop = getImageUrl(backdrop_path, "original");
 
+  const movieStatus: any = TmdbStatus.movie.status;
+
   return (
     <>
+      <Head>
+        <title>{`${title} | Watch Movie`}</title>
+      </Head>
       <Toolbar />
       <Box
         sx={{
@@ -127,10 +142,31 @@ const info = ({
                     <Typography variant="h2" fontWeight={"bold"}>
                       {title}
                     </Typography>
-                    <Typography variant="overline">{tagline}</Typography>
+                    <Typography variant="subtitle2">{tagline}</Typography>
                   </Box>
                   <Box flex={8}>
                     <Typography variant="subtitle1">{overview}</Typography>
+                  </Box>
+                  <Box flex={1}>
+                    <Stack direction={"row"} spacing={1}>
+                      {genres.map((e: genresObj, i: number) => {
+                        return (
+                          <Chip
+                            label={`#${e.name}`}
+                            variant="outlined"
+                            sx={{
+                              color: "white",
+                            }}
+                            clickable
+                          />
+                        );
+                      })}
+                    </Stack>
+                  </Box>
+                  <Box flex={1}>
+                    <Typography variant="subtitle2">
+                      {release_date} / {movieStatus[status]}
+                    </Typography>
                     <StyledRating
                       name="size-large"
                       size="large"
@@ -139,25 +175,12 @@ const info = ({
                       readOnly
                     />
                   </Box>
-                  <Box flex={1}>
-                    <Typography variant="subtitle1">{overview}</Typography>
-                  </Box>
                 </Box>
               </Grid>
             </Grid>
           </Container>
         </Box>
       </Box>
-      {/* <Box>
-        <img src={backDrop} />
-
-        <img src={mainPoster} />
-      </Box>
-      {status}
-      {release_date}
-      {title}
-      {tagline}
-      <img src={backDrop} /> */}
     </>
   );
 };

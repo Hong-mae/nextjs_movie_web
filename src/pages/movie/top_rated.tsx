@@ -22,7 +22,7 @@ const top_rated = ({ top_rated }: Props) => {
   return (
     <>
       <Head>
-        <title>Top Rated | Watch Movie</title>
+        <title>최고 평점 | Watch Movie</title>
       </Head>
       <Toolbar />
       <CardList list={top_rated.results} />

@@ -2,7 +2,7 @@ import CardList from "@/components/organisms/CardList";
 import { getMovieList } from "@/utils/tmdbController";
 import { AppBar, Box, Toolbar } from "@mui/material";
 import Head from "next/head";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export const getStaticProps = async () => {
   const { list: now_playing } = await getMovieList("now_playing");
@@ -19,14 +19,16 @@ interface Props {
 }
 
 const now_playing = ({ now_playing }: Props) => {
+  const [list, setlist] = useState(now_playing.results);
+
   return (
     <>
       <Head>
-        <title>Now Playing | Watch Movie</title>
+        <title>상영 중 | Watch Movie</title>
       </Head>
       <Box>
         <Toolbar />
-        <CardList list={now_playing.results} />
+        <CardList list={list} />
       </Box>
     </>
   );

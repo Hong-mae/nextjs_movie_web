@@ -22,7 +22,7 @@ const upcoming = ({ upcoming }: Props) => {
   return (
     <>
       <Head>
-        <title>Upcoming | Watch Movie</title>
+        <title>개봉 임박 | Watch Movie</title>
       </Head>
       <Toolbar />
       <CardList list={upcoming.results} />

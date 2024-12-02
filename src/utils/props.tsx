@@ -13,6 +13,7 @@ interface MovieInfoProps {
   adult: boolean;
   backdrop_path: string;
   profile_path: string;
+  genres: ReadonlyArray<genresObj>;
   genre_ids: ReadonlyArray<number>;
   id: number;
   original_language: string;
@@ -28,3 +29,8 @@ interface MovieInfoProps {
   tagline: string;
   status: string;
 }
+
+type genresObj = {
+  id: number;
+  name: string;
+};

@@ -22,7 +22,7 @@ const popular = ({ popular }: Props) => {
   return (
     <>
       <Head>
-        <title>Popular | Watch Movie</title>
+        <title>인기 영화 | Watch Movie</title>
       </Head>
 
       <Toolbar />
