@@ -1,4 +1,4 @@
-import { Box, Container, Link } from "@mui/material";
+import { Box, Container, Link, Typography } from "@mui/material";
 import React from "react";
 import Carousel from "../Carousel";
 
@@ -19,10 +19,24 @@ const MovieCarousel = ({ title, href, lists }: Props) => {
           href={`/movie/${href}`}
           sx={{
             display: "inline-block",
+            transition: "1s ease-in-out",
             mb: "0.5rem",
+            ":hover": {
+              "& > * ": {
+                display: "inline",
+              },
+            },
           }}
         >
           {title}
+          <Typography
+            variant="subtitle1"
+            sx={{
+              display: "none",
+            }}
+          >
+            {` 더 보기 ＞`}
+          </Typography>
         </Link>
         <Carousel items={lists.results} />
       </Box>

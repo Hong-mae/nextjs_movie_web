@@ -2,6 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Header from "../organisms/Header";
 import { CssBaseline } from "@mui/material";
+import Footer from "../organisms/Footer";
 
 const Layout = ({ children }: React.PropsWithChildren) => {
   return (
@@ -19,6 +20,7 @@ const Layout = ({ children }: React.PropsWithChildren) => {
         <CssBaseline />
         <Header isMain={false} />
         {children}
+        <Footer />
       </main>
     </>
   );

@@ -17,18 +17,17 @@ export const getImageUrl = (target: string, size: number | string) => {
   }${target}`;
 };
 
-export const getMovieList = async (target: string) => {
+export const getMovieList = async (target: string, page: number = 1) => {
   const url = `${TMDB_MOVIE_URL}/${target}`;
   const list = await axios.get(url, {
     params: {
       ...default_params,
+      page,
     },
     headers: {
       Authorization,
     },
   });
-
-  console.log(url);
 
   return { list: list.data };
 };
@@ -47,7 +46,7 @@ export const getMovieInfo = async (
       }
     : {
         append_to_response,
-        include_image_language: "ko,en",
+        include_image_language: "ko",
         language: "ko-KR",
       };
 

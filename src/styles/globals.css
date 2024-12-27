@@ -35,6 +35,10 @@ a {
   text-decoration: none;
 }
 
+.youtube-slide {
+  width: 300px !important;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;

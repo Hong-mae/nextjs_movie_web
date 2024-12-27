@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import {
-  getImageUrl,
-  getMovieInfo,
-  getMovieList,
-} from "@/utils/tmdbController";
+import { getImageUrl, getMovieInfo } from "@/utils/tmdbController";
 import { GetServerSidePropsContext } from "next";
 import {
   AppBar,
+  Avatar,
+  AvatarGroup,
   Box,
   Button,
   Chip,
   Container,
   Divider,
   Grid2 as Grid,
+  ImageList,
+  ImageListItem,
   Rating,
   Stack,
   styled,
@@ -23,12 +22,18 @@ import {
 import Error from "next/error";
 import TmdbStatus from "../../../utils/data.json";
 import Head from "next/head";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import ReactPlayer from "react-player/lazy";
+import Slider from "react-slick";
 
 interface Props extends MovieInfoProps {
   videos: ReadonlyArray<object>;
   backdrops: ReadonlyArray<object>;
   logos: ReadonlyArray<object>;
   posters: ReadonlyArray<object>;
+  cast: ReadonlyArray<object>;
+  crew: ReadonlyArray<object>;
   errorCode?: number;
 }
 
@@ -54,11 +59,11 @@ export const getServerSideProps = async (
   );
 
   const { backdrops, posters, logos } = info.images;
+  const { cast, crew } = info.credits;
 
   delete info.images;
   delete info.videos;
-
-  console.log(info);
+  delete info.credits;
 
   return {
     props: {
@@ -67,6 +72,8 @@ export const getServerSideProps = async (
       backdrops,
       posters,
       logos,
+      crew,
+      cast,
     },
   };
 };
@@ -90,17 +97,38 @@ const info = ({
   status,
   poster_path,
   backdrop_path,
-  overview,
+  overview = "등록된 정보가 없습니다.",
   vote_average,
   genres,
+  posters,
+  crew,
+  cast,
+  videos,
   errorCode,
 }: Props) => {
+  const [isWindow, setIsWindow] = useState(false);
+
+  useEffect(() => {
+    setIsWindow(true);
+  }, []);
+
   if (errorCode) return <Error statusCode={errorCode} title="Invalid Value" />;
 
   const mainPoster = getImageUrl(poster_path, 342);
   const backdrop = getImageUrl(backdrop_path, "original");
 
   const movieStatus: any = TmdbStatus.movie.status;
+
+  const slideOpts = {
+    dots: true,
+    infinite: false,
+    arrows: false,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    style: {
+      width: "auto",
+    },
+  };
 
   return (
     <>
@@ -117,41 +145,52 @@ const info = ({
       >
         <Box
           sx={{
-            py: 4,
+            py: 2,
             backdropFilter: "blur(5px)",
             backgroundColor: "rgba(0,0,0,0.5)",
             color: "white",
           }}
         >
           <Container fixed>
-            <Grid container spacing={2}>
-              <Grid size={4}>
+            <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+              <Box
+                flex={1}
+                sx={{
+                  "& > img": {
+                    display: "block",
+                    width: {
+                      xs: "100%",
+                    },
+                  },
+                }}
+              >
                 <img src={mainPoster} />
-              </Grid>
-              <Grid size={8}>
-                <Box
+              </Box>
+              <Box flex={"2"}>
+                <Stack
+                  direction={"column"}
+                  spacing={2}
+                  height={"100%"}
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-around",
+                    justifyContent: "space-between",
                     alignItems: "flex-start",
-                    height: "100%",
                   }}
                 >
-                  <Box flex={3}>
+                  <Box flex={2}>
                     <Typography variant="h2" fontWeight={"bold"}>
                       {title}
                     </Typography>
-                    <Typography variant="subtitle2">{tagline}</Typography>
+                    <Typography variant="subtitle1">{tagline}</Typography>
                   </Box>
                   <Box flex={8}>
-                    <Typography variant="subtitle1">{overview}</Typography>
+                    <Typography variant="subtitle2">{overview}</Typography>
                   </Box>
                   <Box flex={1}>
                     <Stack direction={"row"} spacing={1}>
                       {genres.map((e: genresObj, i: number) => {
                         return (
                           <Chip
+                            key={i}
                             label={`#${e.name}`}
                             variant="outlined"
                             sx={{
@@ -175,9 +214,9 @@ const info = ({
                       readOnly
                     />
                   </Box>
-                </Box>
-              </Grid>
-            </Grid>
+                </Stack>
+              </Box>
+            </Stack>
           </Container>
         </Box>
       </Box>
