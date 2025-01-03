@@ -9,7 +9,7 @@ import {
   useScrollTrigger,
 } from "@mui/material";
 import { redirect } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface Props {
   window?: () => Window;
@@ -66,33 +66,19 @@ const ElevationScroll = (props: Props) => {
     target: window ? window() : undefined,
   });
 
-  let nav = null;
-
-  if (isMain) {
-    nav = children
-      ? React.cloneElement(children, {
-          elevation: 0,
-          style: {
-            color: "white",
-            transition: trigger ? fadeIn : fadeOut,
-            padding: trigger ? `${paddingAfter} 0` : `${paddingBefore} 0`,
-            backgroundColor: trigger ? bgColorAfter : bgColorBefore,
-            backgroundImage:
-              "linear-gradient(180deg, rgba(48,48,48,1), transparent)",
-          },
-        })
-      : null;
-  } else {
-    nav = children
-      ? React.cloneElement(children, {
-          elevation: 0,
-          style: {
-            color: "white",
-            backgroundColor: bgColorAfter,
-          },
-        })
-      : null;
-  }
+  let nav = children
+    ? React.cloneElement(children, {
+        elevation: 0,
+        style: {
+          color: "white",
+          transition: trigger ? fadeIn : fadeOut,
+          padding: trigger ? `${paddingAfter} 0` : `${paddingBefore} 0`,
+          backgroundColor: trigger ? bgColorAfter : bgColorBefore,
+          backgroundImage:
+            "linear-gradient(180deg, rgba(48,48,48,1), transparent)",
+        },
+      })
+    : null;
 
   return nav;
 };
@@ -103,6 +89,7 @@ const Navbar = () => {
 
 const Header = (props: Props) => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [toggleElevation, setToggleElevation] = useState(true);
 
   const logout = () => {
     setLoggedIn(false);
@@ -113,7 +100,13 @@ const Header = (props: Props) => {
     setLoggedIn(true);
     window.location.href = "/login";
   };
-  return (
+
+  useEffect(() => {
+    if (window.location.pathname === "/") setToggleElevation(true);
+    else setToggleElevation(false);
+  }, []);
+
+  return toggleElevation ? (
     <ElevationScroll {...props}>
       <AppBar component={"nav"}>
         <Toolbar>
@@ -159,6 +152,50 @@ const Header = (props: Props) => {
         </Toolbar>
       </AppBar>
     </ElevationScroll>
+  ) : (
+    <AppBar component={"nav"} sx={{ bgcolor: "#303030" }}>
+      <Toolbar>
+        <Link href="/" sx={{ color: "inherit" }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MovieFilter />
+          </IconButton>
+        </Link>
+
+        <Box
+          sx={{
+            display: {
+              xs: "none",
+              sm: "flex",
+            },
+            flexGrow: 1,
+            justifyContent: "end",
+          }}
+        >
+          {navItems.map((item, i) => (
+            <Link key={i} href={item.href} sx={{ color: "inherit" }}>
+              <Button key={item.title} sx={{ color: "inherit" }}>
+                {item.title}
+              </Button>
+            </Link>
+          ))}
+          {loggedIn ? (
+            <Button variant="text" color="inherit" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
+            <Button variant="text" color="inherit" onClick={login}>
+              Login
+            </Button>
+          )}
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

@@ -4,8 +4,8 @@ interface MovieListsProps {
     minimum: string;
   };
   page: number;
-  results: ReadonlyArray<MovieInfoProps>;
-  total_page: number;
+  results: Array<MovieInfoProps>;
+  total_pages: number;
   total_results: number;
 }
 

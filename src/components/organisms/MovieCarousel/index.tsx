@@ -38,7 +38,7 @@ const MovieCarousel = ({ title, href, lists }: Props) => {
             {` 더 보기 ＞`}
           </Typography>
         </Link>
-        <Carousel items={lists.results} />
+        <Carousel items={lists} />
       </Box>
     </Container>
   );

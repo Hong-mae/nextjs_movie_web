@@ -8,13 +8,22 @@ import {
 } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
 import * as LocalStorage from "@/utils/localStorage";
+import dayjs, { ManipulateType } from "dayjs";
 
 interface Props {
   title: string;
   content: string;
+  expires?: {
+    value: number;
+    type: ManipulateType; // d: day(date), m: month, y: year
+  };
 }
 
-const AlertDialog = ({ title, content }: Props) => {
+const AlertDialog = ({
+  title,
+  content,
+  expires = { value: 1, type: "d" },
+}: Props) => {
   const [open, setOpen] = useState(false);
   const [isNoShow, setIsNoShow] = useState(false);
 
@@ -23,14 +32,20 @@ const AlertDialog = ({ title, content }: Props) => {
   };
 
   const handleClickNoShow = () => {
-    LocalStorage.setItem("WM_DIALOG_CHECK", "1");
+    const expDate = dayjs().add(expires.value, expires.type).toString();
+    LocalStorage.setItem("WM_DIALOG_CHECK", expDate);
     setOpen(false);
   };
 
   useEffect(() => {
-    if (LocalStorage.getItem("WM_DIALOG_CHECK")) {
+    if (
+      LocalStorage.getItem("WM_DIALOG_CHECK") &&
+      !dayjs().isAfter(LocalStorage.getItem("WM_DIALOG_CHECK")) // 스토리지에 값이 있고, 만료되지 않았으면 안열고
+    ) {
       setOpen(false);
     } else {
+      // 스토리지에 값이 없거나 만료되었으면 보여준다
+      LocalStorage.removeItem("WM_DIALOG_CHECK"); // 혹시 모를 오류를 방지하기 위해 스토리지 삭제
       setOpen(true);
     }
   }, []);
@@ -38,7 +53,7 @@ const AlertDialog = ({ title, content }: Props) => {
   return (
     <Dialog
       open={open}
-      onClose={handleClose}
+      // onClose={handleClose}
       aria-labelledby="alert-title"
       aria-describedby="alert-description"
     >

@@ -1,58 +1,32 @@
 import CardList from "@/components/organisms/CardList";
+import { useFetchLists, useIntersect } from "@/utils/IntersectionHook";
 import { getMovieList } from "@/utils/tmdbController";
-import { AppBar, Box, CircularProgress, Toolbar } from "@mui/material";
+import { Box, CircularProgress, Toolbar } from "@mui/material";
+import { useInfiniteQuery, QueryFunctionContext } from "@tanstack/react-query";
 import Head from "next/head";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 
-export const getStaticProps = async () => {
-  const { list: now_playing } = await getMovieList("now_playing");
+const now_playing = () => {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchLists({
+    target: "now_playing",
+  });
+  const newList = useMemo(
+    () => (data ? data.pages.flatMap((e) => e.results) : []),
+    [data]
+  );
 
-  console.log(now_playing.page);
+  const ref = useIntersect(
+    async (entry, observer) => {
+      observer.unobserve(entry.target);
 
-  return {
-    props: {
-      now_playing,
+      if (hasNextPage && !isFetching) {
+        fetchNextPage();
+      }
     },
-  };
-};
-
-interface Props {
-  now_playing: any;
-}
-
-const now_playing = ({ now_playing }: Props) => {
-  const [list, setlist] = useState(now_playing.results);
-  const [isLoading, setIsLoading] = useState(false);
-  const [page, setPage] = useState(now_playing.page);
-
-  const getMoreList = async () => {
-    setIsLoading(true);
-    const pageNumber = page + 1;
-    const moreList: any = await getMovieList("now_playing", pageNumber);
-    if (moreList.results) {
-      setPage(pageNumber);
-      setlist([...list, moreList.results]);
+    {
+      threshold: 0.2,
     }
-    setIsLoading(false);
-  };
-
-  const detectScroll = () => {
-    console.log(
-      window.scrollY,
-      document.body.offsetHeight,
-      window.innerHeight,
-      window.outerHeight,
-      document.body.offsetHeight - window.innerHeight
-    );
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", detectScroll);
-
-    return () => {
-      window.removeEventListener("scroll", detectScroll);
-    };
-  }, []);
+  );
 
   return (
     <>
@@ -61,13 +35,14 @@ const now_playing = ({ now_playing }: Props) => {
       </Head>
       <Box>
         <Toolbar />
-        <CardList list={list} />
-        {isLoading && (
+        <CardList list={newList} />
+        {isFetching && (
           <Box
             sx={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              height: 500,
               p: 2,
             }}
           >
@@ -75,6 +50,7 @@ const now_playing = ({ now_playing }: Props) => {
           </Box>
         )}
       </Box>
+      <Box sx={{ height: 100 }} ref={ref} />
     </>
   );
 };

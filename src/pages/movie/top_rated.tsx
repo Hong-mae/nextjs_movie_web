@@ -1,31 +1,54 @@
 import CardList from "@/components/organisms/CardList";
-import { getMovieList } from "@/utils/tmdbController";
-import { Toolbar } from "@mui/material";
+import { useFetchLists, useIntersect } from "@/utils/IntersectionHook";
+import { Box, CircularProgress, Toolbar } from "@mui/material";
 import Head from "next/head";
-import React from "react";
+import React, { useMemo, useState } from "react";
 
-export const getStaticProps = async () => {
-  const { list: top_rated } = await getMovieList("top_rated");
+const top_rated = () => {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchLists({
+    target: "top_rated",
+  });
+  const newList = useMemo(
+    () => (data ? data.pages.flatMap((e) => e.results) : []),
+    [data]
+  );
 
-  return {
-    props: {
-      top_rated,
+  const ref = useIntersect(
+    async (entry, observer) => {
+      observer.unobserve(entry.target);
+
+      if (hasNextPage && !isFetching) {
+        fetchNextPage();
+      }
     },
-  };
-};
+    {
+      threshold: 0.2,
+    }
+  );
 
-interface Props {
-  top_rated: any;
-}
-
-const top_rated = ({ top_rated }: Props) => {
   return (
     <>
       <Head>
         <title>최고 평점 | Watch Movie</title>
       </Head>
-      <Toolbar />
-      <CardList list={top_rated.results} />
+      <Box>
+        <Toolbar />
+        <CardList list={newList} />
+        {isFetching && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: 500,
+              p: 2,
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+      </Box>
+      <Box sx={{ height: 100 }} ref={ref} />
     </>
   );
 };
