@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, SyntheticEvent, useEffect, useState } from "react";
 import { getImageUrl, getMovieInfo } from "@/utils/tmdbController";
 import { GetServerSidePropsContext } from "next";
 import {
-  AppBar,
-  Avatar,
-  AvatarGroup,
   Box,
-  Button,
-  Chip,
   Container,
-  Divider,
-  Grid2 as Grid,
-  ImageList,
-  ImageListItem,
   Rating,
   Stack,
   styled,
   Toolbar,
   Typography,
+  Chip,
 } from "@mui/material";
 import Error from "next/error";
 import TmdbStatus from "../../../utils/data.json";
 import Head from "next/head";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ReactPlayer from "react-player/lazy";
-import Slider from "react-slick";
+import Tabs from "@/components/organisms/Tabs";
 
 interface Props extends MovieInfoProps {
   videos: ReadonlyArray<object>;
@@ -101,19 +92,10 @@ const info = ({
   vote_average,
   genres,
   posters,
-  crew,
-  cast,
+  backdrops,
   videos,
   errorCode,
 }: Props) => {
-  const [isWindow, setIsWindow] = useState(false);
-
-  useEffect(() => {
-    setIsWindow(true);
-  }, []);
-
-  if (errorCode) return <Error statusCode={errorCode} title="Invalid Value" />;
-
   const mainPoster = getImageUrl(poster_path, 342);
   const backdrop = getImageUrl(backdrop_path, "original");
 
@@ -130,6 +112,7 @@ const info = ({
     },
   };
 
+  if (errorCode) return <Error statusCode={errorCode} title="Invalid Value" />;
   return (
     <>
       <Head>
@@ -220,6 +203,7 @@ const info = ({
           </Container>
         </Box>
       </Box>
+      <Tabs data={{ backdrops, posters, videos }} />
     </>
   );
 };

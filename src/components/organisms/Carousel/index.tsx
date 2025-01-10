@@ -89,7 +89,7 @@ const Carousel = ({ items }: Props) => {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidestoScroll: 1,
+          slidesToScroll: 1,
         },
       },
     ],
