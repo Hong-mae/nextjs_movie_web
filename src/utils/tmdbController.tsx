@@ -1,5 +1,4 @@
-import axios from "axios";
-import Error from "next/error";
+import { convertURL } from "./urlController";
 
 const TMDB_MOVIE_URL = process.env.NEXT_PUBLIC_TMDB_MOVIE_URL;
 const TMDB_IMAGE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
@@ -17,32 +16,27 @@ export const getImageUrl = (target: string, size: number | string) => {
   }${target}`;
 };
 
-export const getMovieList = async (
-  target: string,
-  page: number = 1
-): Promise<MovieListsProps> => {
-  const url = `${TMDB_MOVIE_URL}/${target}`;
+export const getMovieList = async (target: string, page: number = 1) => {
+  const params = {
+    ...default_params,
+    page: page.toString(),
+  };
 
-  const data = await axios.get(url, {
-    params: {
-      ...default_params,
-      page,
-    },
+  const data = await fetch(convertURL(`${TMDB_MOVIE_URL}/${target}`, params), {
     headers: {
       Authorization,
     },
-  });
+  }).then((data) => data.json());
 
-  return data.data;
+  return data;
 };
 
 export const getMovieInfo = async (
   movie_id: string | number | undefined,
-  target: Array<String>,
+  append: Array<string> = [],
   kr: boolean = true
 ) => {
-  const append_to_response = target.join(",");
-
+  const append_to_response = append.join(",");
   const params = kr
     ? {
         ...default_params,
@@ -54,14 +48,14 @@ export const getMovieInfo = async (
         language: "ko-KR",
       };
 
-  const url = `${TMDB_MOVIE_URL}/${movie_id}`;
+  const data = await fetch(
+    convertURL(`${TMDB_MOVIE_URL}/${movie_id}`, params),
+    {
+      headers: {
+        Authorization,
+      },
+    }
+  ).then((data) => data.json());
 
-  const info = await axios.get(url, {
-    params,
-    headers: {
-      Authorization,
-    },
-  });
-
-  return { info: info.data };
+  return data;
 };
