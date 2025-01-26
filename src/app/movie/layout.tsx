@@ -1,6 +1,6 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/organisms/Navbar";
 import { styled } from "@mui/material";
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
