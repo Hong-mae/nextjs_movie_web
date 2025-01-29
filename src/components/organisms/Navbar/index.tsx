@@ -1,9 +1,8 @@
+import ModeSwitch from "@/components/organisms/ModeSwitch";
 import {
-  AccountBox,
   AccountCircle,
   Menu as MenuIcon,
   MovieFilter,
-  Settings,
 } from "@mui/icons-material";
 import {
   AppBar,
@@ -12,13 +11,9 @@ import {
   Container,
   IconButton,
   Link,
-  Menu,
-  styled,
   Toolbar,
-  Typography,
-  useScrollTrigger,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const navItems = [
   {
@@ -75,6 +70,8 @@ const Navbar = () => {
               <MovieFilter fontSize="inherit" />
             </IconButton>
           </Link>
+
+          <ModeSwitch />
           <Box
             sx={{
               flexGrow: 1,

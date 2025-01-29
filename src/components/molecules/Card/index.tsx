@@ -1,0 +1,32 @@
+"use client";
+
+import { Card, CardActionArea, CardMedia } from "@mui/material";
+import React from "react";
+
+interface CardProps {
+  imgUrl: string;
+  title: string;
+  overview: string;
+  id: number;
+}
+
+export const SimpleCard = ({ imgUrl, title, id }: CardProps) => {
+  return (
+    <Card
+      sx={{
+        maxWidth: 448,
+      }}
+    >
+      <CardActionArea
+        href={`/movie/details/${id}`}
+        sx={{ position: "relative" }}
+      >
+        <CardMedia image={imgUrl} title={title} component={"img"} />
+      </CardActionArea>
+    </Card>
+  );
+};
+
+export const BasicCard = () => {
+  return <div>SimpleCard</div>;
+};

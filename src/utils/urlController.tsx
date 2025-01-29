@@ -15,3 +15,10 @@ export const convertImageURL = (target: string, size: number | string) => {
     typeof size === "number" ? `w${size}` : `${size}`
   }${target}`;
 };
+
+export const convertThumbnailURL = (
+  vId: string,
+  quality: string = "default"
+) => {
+  return `https://img.youtube.com/vi/${vId}/${quality}.jpg`;
+};

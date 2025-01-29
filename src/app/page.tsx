@@ -5,6 +5,7 @@ import { getMovieInfo, getMovieList } from "@/utils/tmdbController";
 import { convertImageURL } from "@/utils/urlController";
 import { Box, Button } from "@mui/material";
 import { Info } from "@mui/icons-material";
+import Carousel from "@/components/molecules/Carousel";
 
 const getList = async () => {
   const { results: now_playing } = await getMovieList("now_playing");
@@ -125,6 +126,31 @@ export default async function Home() {
           </Container>
         </Box>
       </Box>
+      <Container maxWidth="xl">
+        {/* 상영 중인 영화 */}
+        <Box>
+          <Typography variant="h5">상영 중인 영화</Typography>
+          <Carousel list={now_playing} slidesToScroll={4} slidesToShow={4} />
+        </Box>
+
+        {/* 인기 상영작 */}
+        <Box>
+          <Typography variant="h5">인기 상영작</Typography>
+          <Carousel list={popular} slidesToScroll={4} slidesToShow={4} />
+        </Box>
+
+        {/* 최고 평점 영화 */}
+        <Box>
+          <Typography variant="h5">최고 평점 영화</Typography>
+          <Carousel list={top_rated} slidesToScroll={4} slidesToShow={4} />
+        </Box>
+
+        {/* 최근 개봉, 예정작 */}
+        <Box>
+          <Typography variant="h5">최근 개봉, 예정작</Typography>
+          <Carousel list={upcoming} slidesToScroll={4} slidesToShow={4} />
+        </Box>
+      </Container>
     </>
   );
 }
