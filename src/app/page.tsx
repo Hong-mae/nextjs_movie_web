@@ -128,25 +128,25 @@ export default async function Home() {
       </Box>
       <Container maxWidth="xl">
         {/* 상영 중인 영화 */}
-        <Box>
+        <Box sx={{ pt: 2 }}>
           <Typography variant="h5">상영 중인 영화</Typography>
           <Carousel list={now_playing} slidesToScroll={4} slidesToShow={4} />
         </Box>
 
         {/* 인기 상영작 */}
-        <Box>
+        <Box sx={{ pt: 2 }}>
           <Typography variant="h5">인기 상영작</Typography>
           <Carousel list={popular} slidesToScroll={4} slidesToShow={4} />
         </Box>
 
         {/* 최고 평점 영화 */}
-        <Box>
+        <Box sx={{ pt: 2 }}>
           <Typography variant="h5">최고 평점 영화</Typography>
           <Carousel list={top_rated} slidesToScroll={4} slidesToShow={4} />
         </Box>
 
         {/* 최근 개봉, 예정작 */}
-        <Box>
+        <Box sx={{ pt: 2 }}>
           <Typography variant="h5">최근 개봉, 예정작</Typography>
           <Carousel list={upcoming} slidesToScroll={4} slidesToShow={4} />
         </Box>

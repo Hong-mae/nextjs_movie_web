@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardActionArea, CardMedia } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 interface CardProps {
   imgUrl: string;
@@ -11,11 +11,23 @@ interface CardProps {
 }
 
 export const SimpleCard = ({ imgUrl, title, id }: CardProps) => {
+  const [isEnter, setIsEnter] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsEnter(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsEnter(false);
+  };
+
   return (
     <Card
       sx={{
-        maxWidth: 448,
+        mr: 1,
       }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       <CardActionArea
         href={`/movie/details/${id}`}

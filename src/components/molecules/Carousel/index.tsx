@@ -75,7 +75,7 @@ interface CarouselProps {
 const Carousel = ({ list }: CarouselProps) => {
   const settings = {
     dots: false,
-    infinite: true,
+    infinite: false,
     initialSlide: 0,
     slidesToShow: 6,
     slidesToScroll: 6,

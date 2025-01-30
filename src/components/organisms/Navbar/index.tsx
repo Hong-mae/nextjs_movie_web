@@ -1,4 +1,4 @@
-import ModeSwitch from "@/components/organisms/ModeSwitch";
+import ModeSwitch from "@/components/molecules/ModeSwitch";
 import {
   AccountCircle,
   Menu as MenuIcon,
@@ -37,24 +37,8 @@ const settings = ["내 정보", "Logout"];
 const themeMode = ["light", "dark", "system"];
 
 const Navbar = () => {
-  // const [anchorNav, setAnchorNav] = useState<null | HTMLElement>(null);
-  // const [anchorUser, setAnchorUser] = useState<null | HTMLElement>(null);
-
-  // const handleOpenNavMenu = (e: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorNav(e.currentTarget);
-  // };
-  // const handleOpenUserMenu = (e: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorUser(e.currentTarget);
-  // };
-  // const handleCloseNavMenu = () => {
-  //   setAnchorNav(null);
-  // };
-  // const handleCloseUserMenu = () => {
-  //   setAnchorUser(null);
-  // };
-
   return (
-    <AppBar component={"nav"}>
+    <AppBar component={"nav"} sx={{ bgcolor: "#303030" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link href="/">
