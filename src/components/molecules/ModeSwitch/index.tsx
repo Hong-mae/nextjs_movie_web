@@ -1,14 +1,40 @@
 "use client";
-import * as React from "react";
+
 import FormControl from "@mui/material/FormControl";
 import { useColorScheme } from "@mui/material/styles";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import {
-  DarkMode,
-  LightMode,
-  SettingsSystemDaydream,
-} from "@mui/icons-material";
-import theme from "@/theme";
+  FormLabel,
+  ToggleButton,
+  ToggleButtonGroup,
+  ToggleButtonProps,
+} from "@mui/material";
+import { Computer, DarkMode, LightMode } from "@mui/icons-material";
+
+const CustomToggleBtn = (props: ToggleButtonProps) => {
+  return (
+    <ToggleButton
+      {...props}
+      sx={{
+        color: "white",
+        border: "1px solid rgba(255,255,255,0.12)",
+        "&:hover": {
+          textDecoration: "none",
+          bgcolor: "rgba(255 255 255 / 0.08)",
+        },
+        "&.Mui-selected": {
+          color: "white",
+          bgcolor: "rgba(255 255 255 / 0.16)",
+          "&:hover": {
+            bgcolor: "rgba(255 255 255 / 0.24)",
+          },
+        },
+        p: 0.5,
+      }}
+    >
+      {props.children}
+    </ToggleButton>
+  );
+};
 
 export default function ModeSwitch() {
   const { mode, setMode } = useColorScheme();
@@ -17,53 +43,37 @@ export default function ModeSwitch() {
     return null;
   }
 
-  const handleModeChange = (e: React.MouseEvent<HTMLElement>, v: any) => {
-    setMode((e.target.value || v) as typeof mode);
+  const handleModeChange = (e: React.MouseEvent<HTMLElement>, v: string) => {
+    if (v !== null) setMode(v as typeof mode);
   };
 
   return (
     <FormControl>
+      <FormLabel
+        id="mode-change-gorup-label"
+        sx={{ color: "rgba(255,255,255,0.7)" }}
+      >
+        Mode
+      </FormLabel>
       <ToggleButtonGroup
         value={mode}
         exclusive
-        onChange={handleModeChange}
         aria-label="Change Mode"
-        color="secondary"
+        onChange={handleModeChange}
       >
-        <ToggleButton value="system" aria-label="System Mode">
-          <SettingsSystemDaydream data-value="system" />
-        </ToggleButton>
-        <ToggleButton value="light" aria-label="Light Mode">
-          <LightMode data-value="light" />
-        </ToggleButton>
-        <ToggleButton value="dark" aria-label="Dark Mode">
-          <DarkMode data-value="dark" />
-        </ToggleButton>
+        <CustomToggleBtn value="system" aria-label="System Mode">
+          <Computer data-value="system" sx={{ mr: 1 }} />
+          system
+        </CustomToggleBtn>
+        <CustomToggleBtn value="light" aria-label="Light Mode">
+          <LightMode data-value="light" sx={{ mr: 1 }} />
+          Light
+        </CustomToggleBtn>
+        <CustomToggleBtn value="dark" aria-label="Dark Mode">
+          <DarkMode data-value="dark" sx={{ mr: 1 }} />
+          Dark
+        </CustomToggleBtn>
       </ToggleButtonGroup>
     </FormControl>
   );
 }
-
-//   <Box
-//   sx={{
-//     display: "flex",
-//     justifyContent: "flex-end",
-//     mt: 1,
-//     p: 1,
-//   }}
-// >
-//   <FormControl>
-//     <InputLabel id="mode-select-label">Theme</InputLabel>
-//     <Select
-//       labelId="mode-select-label"
-//       id="mode-select"
-//       value={mode}
-//       onChange={(event) => setMode(event.target.value as typeof mode)}
-//       label="Theme"
-//     >
-//       <MenuItem value="system">System</MenuItem>
-//       <MenuItem value="light">Light</MenuItem>
-//       <MenuItem value="dark">Dark</MenuItem>
-//     </Select>
-//   </FormControl>
-// </Box>;

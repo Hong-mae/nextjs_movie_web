@@ -1,19 +1,27 @@
-import ModeSwitch from "@/components/molecules/ModeSwitch";
 import {
   AccountCircle,
-  Menu as MenuIcon,
+  Inbox,
+  Mail,
   MovieFilter,
+  Settings,
 } from "@mui/icons-material";
 import {
   AppBar,
   Box,
   Button,
   Container,
+  Divider,
+  Drawer,
   IconButton,
   Link,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
   Toolbar,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 const navItems = [
   {
@@ -34,9 +42,43 @@ const navItems = [
   },
 ];
 const settings = ["내 정보", "Logout"];
-const themeMode = ["light", "dark", "system"];
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setOpen((prevState) => !prevState);
+  };
+
+  const DrawerList = (
+    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
+      <List>
+        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <Inbox /> : <Mail />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["All mail", "Trash", "Spam"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <Inbox /> : <Mail />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
   return (
     <AppBar component={"nav"} sx={{ bgcolor: "#303030" }}>
       <Container maxWidth="xl">
@@ -55,7 +97,7 @@ const Navbar = () => {
             </IconButton>
           </Link>
 
-          <ModeSwitch />
+          {/* <ModeSwitch /> */}
           <Box
             sx={{
               flexGrow: 1,
@@ -81,6 +123,17 @@ const Navbar = () => {
             >
               <AccountCircle fontSize="inherit" />
             </IconButton>
+            <IconButton
+              size="large"
+              aria-label="settings"
+              sx={{ color: "white" }}
+              onClick={toggleDrawer}
+            >
+              <Settings fontSize="inherit" />
+            </IconButton>
+            <Drawer open={open} onClose={toggleDrawer} anchor="right">
+              {DrawerList}
+            </Drawer>
           </Box>
         </Toolbar>
       </Container>

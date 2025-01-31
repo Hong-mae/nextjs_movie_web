@@ -10,6 +10,8 @@ import { usePathname } from "next/navigation";
 import ElevationScroll from "@/components/molecules/ElevationScroll";
 import React from "react";
 
+import "./globals.css";
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
