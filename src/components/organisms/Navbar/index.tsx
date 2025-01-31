@@ -1,3 +1,4 @@
+import ModeSwitch from "@/components/molecules/ModeSwitch";
 import {
   AccountCircle,
   Inbox,
@@ -51,7 +52,11 @@ const Navbar = () => {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
+    <Box
+      sx={{ width: 300, bgcolor: "#303030", color: "white", height: "100%" }}
+      role="presentation"
+      // onClick={toggleDrawer}
+    >
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -66,16 +71,9 @@ const Navbar = () => {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <ListItem>
+          <ModeSwitch />
+        </ListItem>
       </List>
     </Box>
   );
@@ -97,7 +95,6 @@ const Navbar = () => {
             </IconButton>
           </Link>
 
-          {/* <ModeSwitch /> */}
           <Box
             sx={{
               flexGrow: 1,

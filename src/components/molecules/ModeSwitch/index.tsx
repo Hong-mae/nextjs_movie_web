@@ -15,8 +15,10 @@ const CustomToggleBtn = (props: ToggleButtonProps) => {
     <ToggleButton
       {...props}
       sx={{
+        flex: 1,
         color: "white",
         border: "1px solid rgba(255,255,255,0.12)",
+        textTransform: "none",
         "&:hover": {
           textDecoration: "none",
           bgcolor: "rgba(255 255 255 / 0.08)",
@@ -28,7 +30,7 @@ const CustomToggleBtn = (props: ToggleButtonProps) => {
             bgcolor: "rgba(255 255 255 / 0.24)",
           },
         },
-        p: 0.5,
+        p: 1,
       }}
     >
       {props.children}
@@ -48,7 +50,7 @@ export default function ModeSwitch() {
   };
 
   return (
-    <FormControl>
+    <FormControl sx={{ width: "100%" }}>
       <FormLabel
         id="mode-change-gorup-label"
         sx={{ color: "rgba(255,255,255,0.7)" }}
@@ -63,7 +65,7 @@ export default function ModeSwitch() {
       >
         <CustomToggleBtn value="system" aria-label="System Mode">
           <Computer data-value="system" sx={{ mr: 1 }} />
-          system
+          System
         </CustomToggleBtn>
         <CustomToggleBtn value="light" aria-label="Light Mode">
           <LightMode data-value="light" sx={{ mr: 1 }} />
