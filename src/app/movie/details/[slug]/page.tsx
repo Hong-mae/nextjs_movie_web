@@ -107,7 +107,7 @@ const Details = async ({ params }: DetailsProps) => {
                   },
                 }}
               >
-                <img src={mainPoster} />
+                <Box component={"img"} src={mainPoster} />
               </Box>
               <Box flex={"2"}>
                 <Stack
