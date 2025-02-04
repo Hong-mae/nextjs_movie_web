@@ -96,7 +96,7 @@ const Navbar = () => {
           return (
             <ListItem key={`${item.title}_${i}`} disablePadding>
               <ListItemButton href={item.href}>
-                <ListItemIcon>{icons}</ListItemIcon>
+                <ListItemIcon sx={{ color: "white" }}>{icons}</ListItemIcon>
                 <ListItemText primary={item.title} />
               </ListItemButton>
             </ListItem>
