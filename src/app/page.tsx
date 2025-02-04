@@ -9,40 +9,40 @@ import CarouselSection from "@/components/organisms/CarouselSection";
 
 const getList = async () => {
   const { results: now_playing } = await getMovieList("now_playing");
-  // const { results: popular } = await getMovieList("popular");
-  // const { results: top_rated } = await getMovieList("top_rated");
-  // const { results: upcoming } = await getMovieList("upcoming");
+  const { results: popular } = await getMovieList("popular");
+  const { results: top_rated } = await getMovieList("top_rated");
+  const { results: upcoming } = await getMovieList("upcoming");
 
   const main = await getMovieInfo(now_playing[0].id);
 
   return {
-    // now_playing,
-    // popular,
-    // top_rated,
-    // upcoming,
+    now_playing,
+    popular,
+    top_rated,
+    upcoming,
     main,
   };
 };
 
 export default async function Home() {
-  const { main } = await getList();
-  // const mainImgURL = convertImageURL(main.backdrop_path, "original");
+  const { now_playing, popular, top_rated, upcoming, main } = await getList();
+  const mainImgURL = convertImageURL(main.backdrop_path, "original");
 
   return (
     <>
       <Box sx={{ position: "relative", height: "50rem" }}>
-        {/* <Box
+        <Box
           component={"img"}
-          sx={{
+          src={mainImgURL}
+          alt={main.title}
+          loading="lazy"
+          style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
             display: "block",
           }}
-          loading="lazy"
-          src={mainImgURL}
-          alt={main.title}
-        /> */}
+        />
 
         <Box
           sx={{
@@ -127,17 +127,19 @@ export default async function Home() {
           </Container>
         </Box>
       </Box>
-      {/* 
       <Container maxWidth="xl">
+        {/* 상영 중인 영화 */}
         <CarouselSection title="상영 중인 영화" list={now_playing} />
 
+        {/* 인기 상영작 */}
         <CarouselSection title="인기 상영작" list={popular} />
 
+        {/* 최고 평점 영화 */}
         <CarouselSection title="최고 평점 영화" list={top_rated} />
 
+        {/* 최근 개봉, 예정작 */}
         <CarouselSection title="최근 개봉, 예정작" list={upcoming} />
       </Container>
-       */}
     </>
   );
 }
