@@ -22,13 +22,7 @@ export const SimpleCard = ({ imgUrl, title, id }: CardProps) => {
   };
 
   return (
-    <Card
-      sx={{
-        mr: 1,
-      }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <Card onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <CardActionArea
         href={`/movie/details/${id}`}
         sx={{ position: "relative" }}

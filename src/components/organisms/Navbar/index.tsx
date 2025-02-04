@@ -1,9 +1,14 @@
 import ModeSwitch from "@/components/molecules/ModeSwitch";
 import {
   AccountCircle,
+  Favorite,
+  Grade,
   Inbox,
+  LocalMovies,
   Mail,
+  Menu,
   MovieFilter,
+  Schedule,
   Settings,
 } from "@mui/icons-material";
 import {
@@ -45,42 +50,71 @@ const navItems = [
 const settings = ["내 정보", "Logout"];
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false);
+  const [anchorElNav, setAnchorElNav] = useState(false);
+  const [anchorElSettings, setAnchorElSettings] = useState(false);
 
   const toggleDrawer = () => {
-    setOpen((prevState) => !prevState);
+    setAnchorElSettings((prevState) => !prevState);
   };
 
-  const DrawerList = (
+  const toggleNav = () => {
+    setAnchorElNav((prevState) => !prevState);
+  };
+
+  const SettingsList = (
     <Box
       sx={{ width: 300, bgcolor: "#303030", color: "white", height: "100%" }}
       role="presentation"
-      // onClick={toggleDrawer}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <Inbox /> : <Mail />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        <ListItem>
+        <ListItem disablePadding>
           <ModeSwitch />
         </ListItem>
       </List>
     </Box>
   );
+
+  const NavList = (
+    <Box
+      sx={{ width: 180, bgcolor: "#303030", color: "white", height: "100%" }}
+    >
+      <List>
+        {navItems.map((item, i) => {
+          let icons = null;
+
+          switch (i) {
+            case 0: // 상영 중인 영화
+              icons = <LocalMovies />;
+              break;
+            case 1: // 인기 영화
+              icons = <Favorite />;
+              break;
+            case 2: // 최고 평점
+              icons = <Grade />;
+              break;
+            case 3: // 개봉 예정
+              icons = <Schedule />;
+              break;
+          }
+
+          return (
+            <ListItem key={`${item.title}_${i}`} disablePadding>
+              <ListItemButton href={item.href}>
+                <ListItemIcon>{icons}</ListItemIcon>
+                <ListItemText primary={item.title} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+    </Box>
+  );
+
   return (
     <AppBar component={"nav"} sx={{ bgcolor: "#303030" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* Desktop Navbar */}
           <Link href="/">
             <IconButton
               size="large"
@@ -94,10 +128,9 @@ const Navbar = () => {
               <MovieFilter fontSize="inherit" />
             </IconButton>
           </Link>
-
           <Box
             sx={{
-              flexGrow: 1,
+              flexGrow: 2,
               display: { xs: "none", md: "flex" },
               justifyContent: "end",
               alignItems: "center",
@@ -128,10 +161,66 @@ const Navbar = () => {
             >
               <Settings fontSize="inherit" />
             </IconButton>
-            <Drawer open={open} onClose={toggleDrawer} anchor="right">
-              {DrawerList}
+            <Drawer
+              open={anchorElSettings}
+              onClose={toggleDrawer}
+              anchor="right"
+            >
+              {SettingsList}
             </Drawer>
           </Box>
+          {/* Desktop Navbar */}
+          {/* Mobile Navbar */}
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              sx={{
+                display: { xs: "flex", md: "none" },
+                mr: 1,
+                color: "white",
+              }}
+              aria-label="nav"
+              onClick={toggleNav}
+            >
+              <Menu />
+            </IconButton>
+          </Box>
+          <Drawer open={anchorElNav} onClose={toggleNav}>
+            {NavList}
+          </Drawer>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <Link href="/">
+              <IconButton
+                size="large"
+                sx={{
+                  display: { xs: "flex", md: "none" },
+                  mr: 1,
+                  color: "white",
+                }}
+                aria-label="logo"
+              >
+                <MovieFilter fontSize="inherit" />
+              </IconButton>
+            </Link>
+          </Box>
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
+            <IconButton
+              size="large"
+              aria-label="account"
+              sx={{ color: "white", display: { xs: "flex", md: "none" } }}
+            >
+              <AccountCircle fontSize="inherit" />
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="settings"
+              sx={{ color: "white", display: { xs: "flex", md: "none" } }}
+              onClick={toggleDrawer}
+            >
+              <Settings fontSize="inherit" />
+            </IconButton>
+          </Box>
+          {/* Mobile Navbar */}
         </Toolbar>
       </Container>
     </AppBar>

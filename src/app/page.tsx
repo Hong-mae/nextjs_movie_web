@@ -6,6 +6,7 @@ import { convertImageURL } from "@/utils/urlController";
 import { Box, Button } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import Carousel from "@/components/molecules/Carousel";
+import CarouselSection from "@/components/organisms/CarouselSection";
 
 const getList = async () => {
   const { results: now_playing } = await getMovieList("now_playing");
@@ -128,28 +129,16 @@ export default async function Home() {
       </Box>
       <Container maxWidth="xl">
         {/* 상영 중인 영화 */}
-        <Box sx={{ pt: 2 }}>
-          <Typography variant="h5">상영 중인 영화</Typography>
-          <Carousel list={now_playing} slidesToScroll={4} slidesToShow={4} />
-        </Box>
+        <CarouselSection title="상영 중인 영화" list={now_playing} />
 
         {/* 인기 상영작 */}
-        <Box sx={{ pt: 2 }}>
-          <Typography variant="h5">인기 상영작</Typography>
-          <Carousel list={popular} slidesToScroll={4} slidesToShow={4} />
-        </Box>
+        <CarouselSection title="인기 상영작" list={popular} />
 
         {/* 최고 평점 영화 */}
-        <Box sx={{ pt: 2 }}>
-          <Typography variant="h5">최고 평점 영화</Typography>
-          <Carousel list={top_rated} slidesToScroll={4} slidesToShow={4} />
-        </Box>
+        <CarouselSection title="최고 평점 영화" list={top_rated} />
 
         {/* 최근 개봉, 예정작 */}
-        <Box sx={{ pt: 2 }}>
-          <Typography variant="h5">최근 개봉, 예정작</Typography>
-          <Carousel list={upcoming} slidesToScroll={4} slidesToShow={4} />
-        </Box>
+        <CarouselSection title="최근 개봉, 예정작" list={upcoming} />
       </Container>
     </>
   );

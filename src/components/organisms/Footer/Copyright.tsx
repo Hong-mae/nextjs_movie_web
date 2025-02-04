@@ -7,7 +7,7 @@ export default function Copyright() {
       variant="body2"
       align="center"
       sx={{
-        color: "text.secondary",
+        color: "white",
       }}
     >
       © 2023, Han Bin Park. All rights reserved.

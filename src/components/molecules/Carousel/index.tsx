@@ -30,7 +30,11 @@ const NextArrow = ({ onClick }: ComponentProps<"button">) => {
           },
           color: "white",
         },
-        (theme) => theme.applyStyles("dark", {}),
+        (theme) =>
+          theme.applyStyles("dark", {
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0), rgba(0,0,0,0.5))",
+          }),
       ]}
     >
       <NavigateNext fontSize="large" />
@@ -58,7 +62,11 @@ const PrevArrow = ({ onClick }: ComponentProps<"button">) => {
           },
           color: "white",
         },
-        (theme) => theme.applyStyles("dark", {}),
+        (theme) =>
+          theme.applyStyles("dark", {
+            background:
+              "linear-gradient(270deg, rgba(0,0,0,0), rgba(0,0,0,0.5))",
+          }),
       ]}
     >
       <NavigateBefore fontSize="large" />
@@ -109,7 +117,15 @@ const Carousel = ({ list }: CarouselProps) => {
   };
 
   return (
-    <Box className="slider-container" sx={{ position: "relative" }}>
+    <Box
+      className="slider-container"
+      sx={{
+        position: "relative",
+        "& .slick-list": {
+          "& .slick-slide > div": { padding: "0 5px" },
+        },
+      }}
+    >
       <Slider {...settings}>
         {list.map((e, i) => {
           const imgUrl = convertImageURL(e.backdrop_path, 780);

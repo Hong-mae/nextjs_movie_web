@@ -10,6 +10,7 @@ const Footer = () => {
         justifyContent: "center",
         alignItems: "center",
         display: "flex",
+        bgcolor: "#303030",
       }}
     >
       <Copyright />

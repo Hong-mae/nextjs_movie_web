@@ -10,8 +10,8 @@ interface ElevationScrollProps {
 const ElevationScroll: React.FC<ElevationScrollProps> = ({ children }) => {
   const bgColorBefore = "transparent";
   const bgColorAfter = "#303030";
-  const fadeIn = "0.5s ease-in";
-  const fadeOut = "0.5s ease-out";
+  const fadeIn = "0.2s ease-in";
+  const fadeOut = "0.2s ease-out";
   const paddingBefore = "1.5rem";
   const paddingAfter = "0";
 

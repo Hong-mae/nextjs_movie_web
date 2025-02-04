@@ -50,7 +50,7 @@ export default function ModeSwitch() {
   };
 
   return (
-    <FormControl sx={{ width: "100%" }}>
+    <FormControl sx={{ width: "100%", px: 2, py: 1 }}>
       <FormLabel
         id="mode-change-gorup-label"
         sx={{ color: "rgba(255,255,255,0.7)" }}
