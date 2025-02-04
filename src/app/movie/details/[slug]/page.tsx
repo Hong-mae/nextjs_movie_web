@@ -12,24 +12,24 @@ type MetadataProps = {
   params: Promise<{ slug: string }>;
 };
 
-export const generateMetadata = async (
-  { params }: MetadataProps,
-  parent: ResolvingMetadata
-): Promise<Metadata> => {
-  const mId = (await params).slug;
+// export const generateMetadata = async (
+//   { params }: MetadataProps,
+//   parent: ResolvingMetadata
+// ): Promise<Metadata> => {
+//   const mId = (await params).slug;
 
-  const info = await getMovieInfo(mId);
-  const og = await convertImageURL(info.backdrop_path, 300);
-  const previousImages = (await parent).openGraph?.images || [];
+//   const info = await getMovieInfo(mId);
+//   const og = await convertImageURL(info.backdrop_path, 300);
+//   const previousImages = (await parent).openGraph?.images || [];
 
-  return {
-    title: `${info.title} | Watch Movie`,
-    description: info.overview,
-    openGraph: {
-      images: [og, ...previousImages],
-    },
-  };
-};
+//   return {
+//     title: `${info.title} | Watch Movie`,
+//     description: info.overview,
+//     openGraph: {
+//       images: [og, ...previousImages],
+//     },
+//   };
+// };
 
 interface GetMovieInfoProps {
   mId: string | number;
@@ -107,7 +107,7 @@ const Details = async ({ params }: DetailsProps) => {
                   },
                 }}
               >
-                <Box component={"img"} src={mainPoster} />
+                <img src={mainPoster} />
               </Box>
               <Box flex={"2"}>
                 <Stack
