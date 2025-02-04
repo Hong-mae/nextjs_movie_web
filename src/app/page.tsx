@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -28,12 +26,12 @@ const getList = async () => {
 
 export default async function Home() {
   const { main } = await getList();
-  const mainImgURL = convertImageURL(main.backdrop_path, "original");
+  // const mainImgURL = convertImageURL(main.backdrop_path, "original");
 
   return (
     <>
       <Box sx={{ position: "relative", height: "50rem" }}>
-        <Box
+        {/* <Box
           component={"img"}
           sx={{
             width: "100%",
@@ -44,7 +42,7 @@ export default async function Home() {
           loading="lazy"
           src={mainImgURL}
           alt={main.title}
-        />
+        /> */}
 
         <Box
           sx={{
