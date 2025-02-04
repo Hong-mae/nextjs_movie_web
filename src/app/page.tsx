@@ -32,16 +32,17 @@ export default async function Home() {
   return (
     <>
       <Box sx={{ position: "relative", height: "50rem" }}>
-        <img
-          src={mainImgURL}
-          alt={main.title}
-          loading="lazy"
-          style={{
+        <Box
+          component={"img"}
+          sx={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
             display: "block",
           }}
+          loading="lazy"
+          src={mainImgURL}
+          alt={main.title}
         />
 
         <Box

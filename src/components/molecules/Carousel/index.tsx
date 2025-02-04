@@ -1,7 +1,7 @@
 "use client";
 
 import { NavigateNext, NavigateBefore } from "@mui/icons-material";
-import { Box, Button, IconButton, Paper } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Slider from "react-slick";
 import { ComponentProps } from "react";
 import { convertImageURL } from "@/utils/urlController";
@@ -127,7 +127,7 @@ const Carousel = ({ list }: CarouselProps) => {
       }}
     >
       <Slider {...settings}>
-        {list.map((e, i) => {
+        {list.map((e) => {
           const imgUrl = convertImageURL(e.backdrop_path, 780);
           return <SimpleCard key={e.title} imgUrl={imgUrl} {...e} />;
         })}

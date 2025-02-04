@@ -3,9 +3,7 @@ import {
   AccountCircle,
   Favorite,
   Grade,
-  Inbox,
   LocalMovies,
-  Mail,
   Menu,
   MovieFilter,
   Schedule,
@@ -16,7 +14,6 @@ import {
   Box,
   Button,
   Container,
-  Divider,
   Drawer,
   IconButton,
   Link,
@@ -47,7 +44,6 @@ const navItems = [
     href: "/movie/upcoming",
   },
 ];
-const settings = ["내 정보", "Logout"];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(false);

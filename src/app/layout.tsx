@@ -27,7 +27,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            {isMainPage ? <ElevationScroll children={Navbar()} /> : <Navbar />}
+            {isMainPage ? (
+              <ElevationScroll children={Navbar()}></ElevationScroll>
+            ) : (
+              <Navbar />
+            )}
             {children}
             <Footer />
           </ThemeProvider>

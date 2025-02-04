@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 
 interface Props {
-  list: ReadonlyArray<any>;
+  list: ReadonlyArray<MovieInfoProps>;
   title: string;
 }
 
