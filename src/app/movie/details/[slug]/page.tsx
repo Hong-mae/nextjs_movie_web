@@ -39,6 +39,10 @@ interface DetailsProps {
   params: Promise<{ slug: number }>;
 }
 
+export const generateStaticParams = () => {
+  return [{ slug: "993710" }];
+};
+
 const getInfo = async ({ mId }: GetMovieInfoProps) => {
   const info = await getMovieInfo(mId, ["videos", "images", "credits"]);
 
