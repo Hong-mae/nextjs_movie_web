@@ -7,15 +7,6 @@ const default_params = {
   language: "ko-KR",
 };
 
-export const getImageUrl = (target: string, size: number | string) => {
-  if (target === null || target === undefined) {
-    return "/no_image.png";
-  }
-  return `${TMDB_IMAGE_URL}/${
-    typeof size === "number" ? `w${size}` : `${size}`
-  }${target}`;
-};
-
 export const getMovieList = async (target: string, page: number = 1) => {
   const params = {
     ...default_params,

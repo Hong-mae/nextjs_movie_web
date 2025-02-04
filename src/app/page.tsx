@@ -6,6 +6,12 @@ import { convertImageURL } from "@/utils/urlController";
 import { Box, Button } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import CarouselSection from "@/components/organisms/CarouselSection";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Watch Movie",
+  description: "TMDB API를 이용한 영화 웹사이트 프로젝트",
+};
 
 const getList = async () => {
   const { results: now_playing } = await getMovieList("now_playing");

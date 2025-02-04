@@ -1,0 +1,12 @@
+{
+  "movie": {
+    "status": {
+      "Rumored": "루머",
+      "Planned": "계획 중",
+      "In Production": "제작 중",
+      "Post Production": "제작 완료",
+      "Released": "개봉 됨",
+      "Canceled": "취소 됨"
+    }
+  }
+}
