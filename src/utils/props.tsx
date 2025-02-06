@@ -39,4 +39,5 @@ interface ImageProps {
   name: string;
   key: string;
   src: string;
+  site?: string;
 }

@@ -1,7 +1,7 @@
 import { convertThumbnailURL } from "@/utils/urlController";
 import { Box, ImageListItem, ImageList as MuiImageList } from "@mui/material";
 import React from "react";
-import { ImageCard } from "../Card";
+import { ImageCard, YoutubeCard } from "../Card";
 
 interface ImageListProps {
   list: ReadonlyArray<ImageProps>;
@@ -19,6 +19,13 @@ const ImageList = ({ list, width = "auto" }: ImageListProps) => {
       }}
     >
       {list.map((e, i) => {
+        if (e.site) {
+          return (
+            <ImageListItem key={e.name} sx={{ width: width }}>
+              <YoutubeCard name={e.name} src={e.src} vId={e.key} />
+            </ImageListItem>
+          );
+        }
         return (
           <ImageListItem key={e.name} sx={{ width: width }}>
             <ImageCard name={e.name} src={e.src} />

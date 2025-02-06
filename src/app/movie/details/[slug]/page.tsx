@@ -9,6 +9,8 @@ import { Box, Chip, Container, Stack, Typography } from "@mui/material";
 import HashTag from "@/components/molecules/HashTag";
 import Tabs from "@/components/molecules/Tabs";
 import { ConstructionOutlined } from "@mui/icons-material";
+import { YoutubeDialog } from "@/components/molecules/Dialog";
+import { useYTDialogStore } from "@/stores/yt-dialog-store-provider";
 
 type MetadataProps = {
   params: Promise<{ slug: string }>;
@@ -180,6 +182,8 @@ const Details = async ({ params }: DetailsProps) => {
       <Container fixed>
         <Tabs videos={videos} backdrops={backdrops} posters={posters} />
       </Container>
+
+      <YoutubeDialog />
     </>
   );
 };

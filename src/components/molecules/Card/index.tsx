@@ -1,6 +1,7 @@
 "use client";
 
-import { LibraryBooks } from "@mui/icons-material";
+import { useYTDialogStore } from "@/stores/yt-dialog-store-provider";
+import { LibraryBooks, PlayArrowRounded } from "@mui/icons-material";
 import {
   Box,
   Card as MuiCard,
@@ -79,6 +80,63 @@ interface ImageCardProps {
   src: string;
 }
 
+interface YoutubeCardProps extends ImageCardProps {
+  name: string;
+  vId: string;
+}
+
 export const ImageCard = ({ name, src }: ImageCardProps) => {
-  return <Box component={"img"} src={src} alt={name} loading="eager" />;
+  return <Box component={"img"} src={src} alt={name} loading="lazy" />;
+};
+
+export const YoutubeCard = ({ name, src, vId }: YoutubeCardProps) => {
+  const [isEnter, setIsEnter] = useState(false);
+  const { isOpen } = useYTDialogStore((state) => state);
+
+  const handleMouseEnter = () => {
+    setIsEnter(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsEnter(false);
+  };
+
+  const handleOpenDialog = () => {
+    isOpen(name, vId, true);
+  };
+
+  return (
+    <Box
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleOpenDialog}
+      sx={{
+        backgroundImage: `url(${src})`,
+        backgroundSize: "100%",
+        width: "320px",
+        height: "180px",
+        color: "white",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
+      }}
+    >
+      {isEnter && (
+        <Box
+          width={64}
+          height={64}
+          sx={{
+            borderRadius: "50%",
+            bgcolor: "rgba(30,30,30, 0.8)",
+            justifyContent: "center",
+            alignItems: "center",
+            display: "flex",
+          }}
+        >
+          <PlayArrowRounded fontSize="large" sx={{ transform: "scale(1.5)" }} />
+        </Box>
+      )}
+    </Box>
+  );
 };
