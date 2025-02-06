@@ -77,7 +77,6 @@ const getInfo = async ({ mId }: GetMovieInfoProps) => {
     };
   });
 
-  console.log(posters);
   const { cast, crew } = info.credits;
 
   delete info.images;
