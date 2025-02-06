@@ -80,5 +80,5 @@ interface ImageCardProps {
 }
 
 export const ImageCard = ({ name, src }: ImageCardProps) => {
-  return <Box component={"img"} src={src} alt={name} loading="lazy" />;
+  return <Box component={"img"} src={src} alt={name} />;
 };
