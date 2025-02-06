@@ -20,7 +20,7 @@ const ImageList = ({ list, width = "auto" }: ImageListProps) => {
     >
       {list.map((e, i) => {
         return (
-          <ImageListItem key={e.name}>
+          <ImageListItem key={e.name} sx={{ width: width }}>
             <ImageCard name={e.name} src={e.src} />
           </ImageListItem>
         );
