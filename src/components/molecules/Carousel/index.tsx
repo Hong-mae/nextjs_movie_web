@@ -5,7 +5,7 @@ import { Box, Button } from "@mui/material";
 import Slider from "react-slick";
 import { ComponentProps } from "react";
 import { convertImageURL } from "@/utils/urlController";
-import { SimpleCard } from "../Card";
+import { Card } from "../Card";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -80,7 +80,7 @@ interface CarouselProps {
   slidesToScroll?: number;
 }
 
-const Carousel = ({ list }: CarouselProps) => {
+export const Carousel = ({ list }: CarouselProps) => {
   const settings = {
     dots: false,
     infinite: false,
@@ -129,11 +129,9 @@ const Carousel = ({ list }: CarouselProps) => {
       <Slider {...settings}>
         {list.map((e) => {
           const imgUrl = convertImageURL(e.backdrop_path, 780);
-          return <SimpleCard key={e.title} imgUrl={imgUrl} {...e} />;
+          return <Card key={e.title} imgUrl={imgUrl} {...e} />;
         })}
       </Slider>
     </Box>
   );
 };
-
-export default Carousel;

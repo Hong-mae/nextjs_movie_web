@@ -16,9 +16,14 @@ export const convertImageURL = (target: string, size: number | string) => {
   }${target}`;
 };
 
-export const convertThumbnailURL = (
-  vId: string,
-  quality: string = "default"
-) => {
+interface thumbnailProps {
+  vId: string;
+  quality: "default" | "sqdefault" | "mqdefault" | "hqdefault";
+}
+
+export const convertThumbnailURL = ({
+  vId,
+  quality = "default",
+}: thumbnailProps) => {
   return `https://img.youtube.com/vi/${vId}/${quality}.jpg`;
 };

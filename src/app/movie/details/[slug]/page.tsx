@@ -1,5 +1,5 @@
 import { getMovieInfo } from "@/utils/tmdbController";
-import { convertImageURL } from "@/utils/urlController";
+import { convertImageURL, convertThumbnailURL } from "@/utils/urlController";
 import { notFound } from "next/navigation";
 import React from "react";
 import TmdbStatus from "@/utils/data.json";
@@ -7,6 +7,8 @@ import Rating from "@/components/molecules/Rating";
 import { Metadata, ResolvingMetadata } from "next";
 import { Box, Chip, Container, Stack, Typography } from "@mui/material";
 import HashTag from "@/components/molecules/HashTag";
+import Tabs from "@/components/molecules/Tabs";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 type MetadataProps = {
   params: Promise<{ slug: string }>;
@@ -47,20 +49,42 @@ interface DetailsProps {
 }
 
 const getInfo = async ({ mId }: GetMovieInfoProps) => {
-  const info = await getMovieInfo(mId, ["videos", "images", "credits"]);
+  const info = await getMovieInfo(mId, ["videos", "images", "credits"], false);
 
-  const videos = info.videos.results.filter(
-    (e: any, i: number) => e.site.toLowerCase() === "youtube"
-  );
+  const videos = info.videos.results
+    .filter((e: any, i: number) => e.site.toLowerCase() === "youtube")
+    .map((e: any) => {
+      return {
+        ...e,
+        src: convertThumbnailURL({
+          vId: e.key,
+          quality: "mqdefault",
+        }),
+      };
+    });
 
-  const { backdrops, posters, logos } = info.images;
+  let { backdrops, posters } = info.images;
+  backdrops = backdrops.map((e: any) => {
+    return {
+      ...e,
+      src: convertImageURL(e.file_path, 300),
+    };
+  });
+  posters = posters.map((e: any) => {
+    return {
+      ...e,
+      src: convertImageURL(e.file_path, 185),
+    };
+  });
+
+  console.log(posters);
   const { cast, crew } = info.credits;
 
   delete info.images;
   delete info.videos;
   delete info.credits;
 
-  return { ...info, videos, backdrops, posters, logos, cast, crew };
+  return { ...info, videos, backdrops, posters, cast, crew };
 };
 
 const Details = async ({ params }: DetailsProps) => {
@@ -75,9 +99,12 @@ const Details = async ({ params }: DetailsProps) => {
     release_date,
     vote_average,
     status,
+    videos,
+    backdrops,
+    posters,
   } = await getInfo({ mId });
 
-  const mainPoster = convertImageURL(poster_path, 342);
+  const mainPoster = convertImageURL(poster_path, 300);
   const backdrop = convertImageURL(backdrop_path, "original");
 
   const movieStatus: any = TmdbStatus.movie.status;
@@ -150,7 +177,10 @@ const Details = async ({ params }: DetailsProps) => {
           </Container>
         </Box>
       </Box>
-      {/* <Tabs data={{ backdrops, posters, videos }} /> */}
+
+      <Container fixed>
+        <Tabs videos={videos} backdrops={backdrops} posters={posters} />
+      </Container>
     </>
   );
 };

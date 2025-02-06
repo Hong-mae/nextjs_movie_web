@@ -1,4 +1,4 @@
-import Carousel from "@/components/molecules/Carousel";
+import { Carousel } from "@/components/molecules/Carousel";
 import { Box, Typography } from "@mui/material";
 import React from "react";
 

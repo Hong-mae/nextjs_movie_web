@@ -34,3 +34,9 @@ type genresObj = {
   id: number;
   name: string;
 };
+
+interface ImageProps {
+  name: string;
+  key: string;
+  src: string;
+}
