@@ -37,9 +37,6 @@ export const YoutubeDialog = () => {
       fullWidth={true}
       maxWidth="xl"
     >
-      {/* <div>
-        title: {title} vId: {vId} open: {open ? "open" : "close"}
-      </div> */}
       <DialogTitle sx={{ m: 0, p: 2 }} id="youtube-dialog-title">
         {title}
       </DialogTitle>
@@ -56,21 +53,6 @@ export const YoutubeDialog = () => {
         <CloseIcon />
       </IconButton>
       <DialogContent dividers>
-        {/* <YouTube
-          videoId={vId}
-          opts={{
-            width: "100%",
-
-            playerVars: {
-              autoplay: 0, //자동재생 O
-              rel: 0, //관련 동영상 표시하지 않음 (근데 별로 쓸모 없는듯..)
-              modestbranding: 1, // 컨트롤 바에 youtube 로고를 표시하지 않음
-            },
-          }}
-          onEnd={(e) => {
-            e.target.stopVideo(0);
-          }}
-        /> */}
         <ReactPlayer
           url={`https://www.youtube.com/watch?v=${vId}`}
           width={"100%"}

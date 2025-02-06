@@ -8,26 +8,26 @@ interface ImageListProps {
   width?: string;
 }
 
-const ImageList = ({ list, width = "auto" }: ImageListProps) => {
+const ImageList = ({ list, width = "auto", ...other }: ImageListProps) => {
   return (
     <MuiImageList
-      key={`${list.length}_${width}`}
       sx={{
         gridAutoFlow: "column",
         gridTemplateColumns: `repeat(auto-fill, ${width}) !important`,
         margin: 0,
       }}
+      {...other}
     >
       {list.map((e, i) => {
         if (e.site) {
           return (
-            <ImageListItem key={e.name} sx={{ width: width }}>
+            <ImageListItem key={i} sx={{ width: width }}>
               <YoutubeCard name={e.name} src={e.src} vId={e.key} />
             </ImageListItem>
           );
         }
         return (
-          <ImageListItem key={e.name} sx={{ width: width }}>
+          <ImageListItem key={i} sx={{ width: width }}>
             <ImageCard name={e.name} src={e.src} />
           </ImageListItem>
         );
