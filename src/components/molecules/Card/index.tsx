@@ -8,17 +8,21 @@ import {
   CardActionArea,
   CardMedia,
   Typography,
+  CardContent,
 } from "@mui/material";
 import React, { useState } from "react";
 
 interface CardProps {
   imgUrl: string;
   title: string;
-  overview: string;
-  id: number;
 }
 
-export const Card = ({ imgUrl, title, id }: CardProps) => {
+interface MovieCardProps extends CardProps {
+  overview: string;
+  mId: number;
+}
+
+export const Card = ({ imgUrl, title, mId }: MovieCardProps) => {
   const [isEnter, setIsEnter] = useState(false);
 
   const handleMouseEnter = () => {
@@ -32,7 +36,7 @@ export const Card = ({ imgUrl, title, id }: CardProps) => {
   return (
     <MuiCard onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <CardActionArea
-        href={`/movie/details/${id}`}
+        href={`/movie/details/${mId}`}
         sx={{ position: "relative" }}
       >
         <CardMedia image={imgUrl} title={title} component={"img"} />
@@ -75,21 +79,15 @@ export const Card = ({ imgUrl, title, id }: CardProps) => {
   );
 };
 
-interface ImageCardProps {
-  name?: string;
-  src: string;
-}
+export const ImageCard = ({ imgUrl, title }: CardProps) => {
+  return <Box component={"img"} src={imgUrl} alt={title} loading="lazy" />;
+};
 
-interface YoutubeCardProps extends ImageCardProps {
-  name: string;
+interface YoutubeCardProps extends CardProps {
   vId: string;
 }
 
-export const ImageCard = ({ name, src }: ImageCardProps) => {
-  return <Box component={"img"} src={src} alt={name} loading="lazy" />;
-};
-
-export const YoutubeCard = ({ name, src, vId }: YoutubeCardProps) => {
+export const YoutubeCard = ({ title, imgUrl, vId }: YoutubeCardProps) => {
   const [isEnter, setIsEnter] = useState(false);
   const { isOpen } = useYTDialogStore((state) => state);
 
@@ -102,7 +100,7 @@ export const YoutubeCard = ({ name, src, vId }: YoutubeCardProps) => {
   };
 
   const handleOpenDialog = () => {
-    isOpen(name, vId, true);
+    isOpen(title, vId, true);
   };
 
   return (
@@ -111,7 +109,7 @@ export const YoutubeCard = ({ name, src, vId }: YoutubeCardProps) => {
       onMouseLeave={handleMouseLeave}
       onClick={handleOpenDialog}
       sx={{
-        backgroundImage: `url(${src})`,
+        backgroundImage: `url(${imgUrl})`,
         backgroundSize: "100%",
         width: "320px",
         height: "180px",
@@ -138,5 +136,29 @@ export const YoutubeCard = ({ name, src, vId }: YoutubeCardProps) => {
         </Box>
       )}
     </Box>
+  );
+};
+
+interface ProfileCardProps extends CardProps {
+  character?: string;
+}
+
+export const ProfileCard = ({
+  imgUrl,
+  title: name,
+  character,
+}: ProfileCardProps) => {
+  return (
+    <MuiCard sx={{ maxWidth: 138 }}>
+      <CardMedia component={"img"} alt={name} image={imgUrl} />
+      <CardContent sx={{ p: 1 }}>
+        <Typography gutterBottom variant="h6" component={"div"}>
+          {name}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {character}
+        </Typography>
+      </CardContent>
+    </MuiCard>
   );
 };

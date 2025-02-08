@@ -11,6 +11,9 @@ import Tabs from "@/components/molecules/Tabs";
 import { ConstructionOutlined } from "@mui/icons-material";
 import { YoutubeDialog } from "@/components/molecules/Dialog";
 import { useYTDialogStore } from "@/stores/yt-dialog-store-provider";
+import Section from "@/components/molecules/Section";
+import { ProfileCard } from "@/components/molecules/Card";
+import { ProfileImgList } from "@/components/molecules/ImageList";
 
 type MetadataProps = {
   params: Promise<{ slug: string }>;
@@ -79,13 +82,20 @@ const getInfo = async ({ mId }: GetMovieInfoProps) => {
     };
   });
 
-  const { cast, crew } = info.credits;
+  let { cast } = info.credits;
+
+  cast = cast.map((e: any) => {
+    return {
+      ...e,
+      src: convertImageURL(e.profile_path, 185),
+    };
+  });
 
   delete info.images;
   delete info.videos;
   delete info.credits;
 
-  return { ...info, videos, backdrops, posters, cast, crew };
+  return { ...info, videos, backdrops, posters, cast };
 };
 
 const Details = async ({ params }: DetailsProps) => {
@@ -103,6 +113,8 @@ const Details = async ({ params }: DetailsProps) => {
     videos,
     backdrops,
     posters,
+    cast,
+    crew,
   } = await getInfo({ mId });
 
   const mainPoster = convertImageURL(poster_path, 300);
@@ -180,7 +192,18 @@ const Details = async ({ params }: DetailsProps) => {
       </Box>
 
       <Container fixed>
-        <Tabs videos={videos} backdrops={backdrops} posters={posters} />
+        <Section>
+          <Typography variant="h6" fontWeight={"bold"}>
+            미디어
+          </Typography>
+          <Tabs videos={videos} backdrops={backdrops} posters={posters} />
+        </Section>
+        <Section>
+          <Typography variant="h6" fontWeight={"bold"}>
+            주요 출연진
+          </Typography>
+          <ProfileImgList list={cast} width="138px" />
+        </Section>
       </Container>
 
       <YoutubeDialog />

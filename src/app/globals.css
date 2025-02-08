@@ -1,6 +1,6 @@
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 8px;
-    position: absolute;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -11,9 +11,8 @@
 ::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 10px;
-    position: absolute;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
-} */
+}

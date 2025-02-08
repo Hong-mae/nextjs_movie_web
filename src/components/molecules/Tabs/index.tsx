@@ -2,7 +2,7 @@
 
 import { Box, Tabs as MuiTabs, Tab } from "@mui/material";
 import React, { useState } from "react";
-import ImageList from "../ImageList";
+import { BasicImgList, YoutubeImgList } from "../ImageList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -72,25 +72,13 @@ const Tabs = ({ videos, posters, backdrops }: TabsProps) => {
           />
         </MuiTabs>
         <CustomTabPanel value={value} index={0}>
-          {videos.length === 0 ? (
-            "등록된 정보가 없습니다."
-          ) : (
-            <ImageList list={videos} width="320px" />
-          )}
+          <YoutubeImgList list={videos} width="320px" />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={1}>
-          {backdrops.length === 0 ? (
-            "등록된 정보가 없습니다."
-          ) : (
-            <ImageList list={backdrops} width="300px" />
-          )}
+          <BasicImgList list={backdrops} width="300px" />
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
-          {posters.length === 0 ? (
-            "등록된 정보가 없습니다."
-          ) : (
-            <ImageList list={posters} width="158px" />
-          )}
+          <BasicImgList list={posters} width="158px" />
         </CustomTabPanel>
       </Box>
     </Box>

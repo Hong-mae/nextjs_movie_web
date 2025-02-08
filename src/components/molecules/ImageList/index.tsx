@@ -1,14 +1,22 @@
 import { convertThumbnailURL } from "@/utils/urlController";
-import { Box, ImageListItem, ImageList as MuiImageList } from "@mui/material";
+import {
+  Box,
+  ImageListItem,
+  ImageList as MuiImageList,
+  Typography,
+} from "@mui/material";
 import React from "react";
-import { ImageCard, YoutubeCard } from "../Card";
+import { ImageCard, ProfileCard, YoutubeCard } from "../Card";
 
 interface ImageListProps {
-  list: ReadonlyArray<ImageProps>;
-  width?: string;
+  children: React.ReactElement[];
 }
 
-const ImageList = ({ list, width = "auto", ...other }: ImageListProps) => {
+interface CustomImgListProps extends ImageListProps {
+  width: string;
+}
+
+const CustomImageList = ({ children, width, ...other }: CustomImgListProps) => {
   return (
     <MuiImageList
       sx={{
@@ -18,22 +26,67 @@ const ImageList = ({ list, width = "auto", ...other }: ImageListProps) => {
       }}
       {...other}
     >
-      {list.map((e, i) => {
-        if (e.site) {
-          return (
-            <ImageListItem key={i} sx={{ width: width }}>
-              <YoutubeCard name={e.name} src={e.src} vId={e.key} />
-            </ImageListItem>
-          );
-        }
-        return (
-          <ImageListItem key={i} sx={{ width: width }}>
-            <ImageCard name={e.name} src={e.src} />
-          </ImageListItem>
-        );
-      })}
+      {children}
     </MuiImageList>
   );
 };
 
-export default ImageList;
+interface BasicImgListProps {
+  list: ReadonlyArray<ImageProps>;
+  width?: string;
+}
+
+export const BasicImgList = ({ list, width = "auto" }: BasicImgListProps) => {
+  return list.length !== 0 ? (
+    <CustomImageList width={width}>
+      {list.map((e, i) => {
+        return (
+          <ImageListItem key={i} sx={{ width: width }}>
+            <ImageCard title={e.name} imgUrl={e.src} />
+          </ImageListItem>
+        );
+      })}
+    </CustomImageList>
+  ) : (
+    <Typography variant="body1">등록된 정보가 없습니다.</Typography>
+  );
+};
+
+export const YoutubeImgList = ({ list, width = "auto" }: BasicImgListProps) => {
+  return list.length !== 0 ? (
+    <CustomImageList width={width}>
+      {list.map((e, i) => {
+        return (
+          <ImageListItem key={i} sx={{ width: width }}>
+            <YoutubeCard title={e.name} imgUrl={e.src} vId={e.key} />
+          </ImageListItem>
+        );
+      })}
+    </CustomImageList>
+  ) : (
+    <Typography variant="body1">등록된 정보가 없습니다.</Typography>
+  );
+};
+
+export const ProfileImgList = ({
+  list,
+  width = "138px",
+}: BasicImgListProps) => {
+  return list.length !== 0 ? (
+    <CustomImageList width={width}>
+      {list.map((e, i) => {
+        return (
+          <ImageListItem key={i} sx={{ width: width }}>
+            <ProfileCard
+              title={e.name}
+              imgUrl={e.src}
+              character={e.character}
+            />
+          </ImageListItem>
+        );
+      })}
+    </CustomImageList>
+  ) : (
+    <Typography variant="body1">등록된 정보가 없습니다.</Typography>
+  );
+};

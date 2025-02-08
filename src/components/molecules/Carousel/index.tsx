@@ -129,7 +129,7 @@ export const Carousel = ({ list }: CarouselProps) => {
       <Slider {...settings}>
         {list.map((e) => {
           const imgUrl = convertImageURL(e.backdrop_path, 780);
-          return <Card key={e.title} imgUrl={imgUrl} {...e} />;
+          return <Card key={e.title} imgUrl={imgUrl} mId={e.id} {...e} />;
         })}
       </Slider>
     </Box>
