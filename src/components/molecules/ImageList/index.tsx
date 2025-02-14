@@ -1,12 +1,13 @@
 import { convertThumbnailURL } from "@/utils/urlController";
 import {
   Box,
+  Grid2 as Grid,
   ImageListItem,
   ImageList as MuiImageList,
   Typography,
 } from "@mui/material";
 import React from "react";
-import { ImageCard, ProfileCard, YoutubeCard } from "../Card";
+import { ImageCard, MovieCard, ProfileCard, YoutubeCard } from "../Card";
 
 interface ImageListProps {
   children: React.ReactElement[];
@@ -88,5 +89,29 @@ export const ProfileImgList = ({
     </CustomImageList>
   ) : (
     <Typography variant="body1">등록된 정보가 없습니다.</Typography>
+  );
+};
+
+interface MovieImgListProps extends Omit<BasicImgListProps, "list"> {
+  list: ReadonlyArray<MovieInfoProps>;
+}
+export const MovieImgList = ({ list, width = "185px" }: MovieImgListProps) => {
+  return (
+    <Box sx={{ my: 4 }}>
+      <Grid container spacing={4} columns={{ xs: 2, sm: 3, md: 5, lg: 6 }}>
+        {list.map((e, i) => {
+          return (
+            <Grid key={i} size={1} data-id={e.id}>
+              <MovieCard
+                imgUrl={e.poster_path}
+                title={e.title}
+                overview={e.release_date}
+                mId={e.id}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Box>
   );
 };

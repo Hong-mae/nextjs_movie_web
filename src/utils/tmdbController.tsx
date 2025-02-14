@@ -1,10 +1,10 @@
 import { convertURL } from "./urlController";
 
 const TMDB_MOVIE_URL = process.env.NEXT_PUBLIC_TMDB_MOVIE_URL;
-const TMDB_IMAGE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_URL;
 const Authorization = "Bearer " + process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN;
 const default_params = {
   language: "ko-KR",
+  region: "kr",
 };
 
 export const getMovieList = async (target: string, page: number = 1) => {

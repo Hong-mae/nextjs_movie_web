@@ -4,6 +4,10 @@ import { ResolvingMetadata, Metadata } from "next";
 import TmdbStatus from "@/utils/data.json";
 import { notFound } from "next/navigation";
 import { convertImageURL } from "@/utils/urlController";
+import { Container } from "@mui/material";
+import { MovieCard } from "@/components/molecules/Card";
+import { MovieImgList } from "@/components/molecules/ImageList";
+import InfiniteScroll from "@/components/organisms/InfiniteScroll";
 
 const MovieType = ["now_playing", "popular", "top_rated", "upcoming"];
 
@@ -41,10 +45,10 @@ const getList = async (
   const list = await getMovieList(mType, page).then((data: MovieListsProps) => {
     let results: Array<MovieInfoProps> = data.results;
 
-    results.map((e) => {
+    data.results = results.map((e) => {
       return {
         ...e,
-        src: convertImageURL(e.poster_path, 185),
+        poster_path: convertImageURL(e.poster_path, 185),
       };
     });
 
@@ -58,14 +62,18 @@ const MovieList = async ({ params }: MovieListProps) => {
   const mType = (await params).mType;
   const {
     page, // Get Page Number
-    results: list, // Movie list of page
+    results, // Movie list of page
   } = await getList(mType);
 
   if (MovieType.findIndex((e) => e === mType) === -1) {
     notFound();
   }
 
-  return <div>{mType}</div>;
+  return (
+    <Container maxWidth="xl">
+      <MovieImgList list={results} />
+    </Container>
+  );
 };
 
 export default MovieList;
