@@ -7,6 +7,12 @@
       "Post Production": "제작 완료",
       "Released": "개봉 됨",
       "Canceled": "취소 됨"
+    },
+    "type": {
+      "now_playing": "상영 중",
+      "popular": "인기 영화",
+      "top_rated": "최고 평점",
+      "upcoming": "개봉 임박"
     }
   }
 }

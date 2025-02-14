@@ -7,7 +7,7 @@ import {
   type YTDialogStore,
   createYTDialogStore,
   initYTDialogStore,
-} from "./yt-dialog-store";
+} from "./store";
 
 export type YTDialogStoreApi = ReturnType<typeof createYTDialogStore>;
 

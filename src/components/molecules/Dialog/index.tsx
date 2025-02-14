@@ -1,6 +1,6 @@
 "use client";
 
-import { useYTDialogStore } from "@/stores/yt-dialog-store-provider";
+import { useYTDialogStore } from "@/stores/YoutubeDialogStore/provider";
 import {
   DialogContent,
   DialogTitle,

@@ -5,14 +5,11 @@ import React from "react";
 import TmdbStatus from "@/utils/data.json";
 import Rating from "@/components/molecules/Rating";
 import { Metadata, ResolvingMetadata } from "next";
-import { Box, Chip, Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import HashTag from "@/components/molecules/HashTag";
 import Tabs from "@/components/molecules/Tabs";
-import { ConstructionOutlined } from "@mui/icons-material";
 import { YoutubeDialog } from "@/components/molecules/Dialog";
-import { useYTDialogStore } from "@/stores/yt-dialog-store-provider";
 import Section from "@/components/molecules/Section";
-import { ProfileCard } from "@/components/molecules/Card";
 import { ProfileImgList } from "@/components/molecules/ImageList";
 
 type MetadataProps = {
@@ -114,7 +111,6 @@ const Details = async ({ params }: DetailsProps) => {
     backdrops,
     posters,
     cast,
-    crew,
   } = await getInfo({ mId });
 
   const mainPoster = convertImageURL(poster_path, 300);
@@ -141,22 +137,23 @@ const Details = async ({ params }: DetailsProps) => {
             color: "white",
           }}
         >
-          <Container fixed>
+          <Container maxWidth="xl">
             <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
               <Box
-                flex={1}
+                flexGrow={1}
                 sx={{
                   "& > img": {
                     display: "block",
                     width: {
                       xs: "100%",
+                      md: "400px",
                     },
                   },
                 }}
               >
                 <Box component={"img"} src={mainPoster} />
               </Box>
-              <Box flex={"2"}>
+              <Box flexGrow={2}>
                 <Stack
                   direction={"column"}
                   spacing={2}
@@ -191,7 +188,7 @@ const Details = async ({ params }: DetailsProps) => {
         </Box>
       </Box>
 
-      <Container fixed>
+      <Container maxWidth="xl">
         <Section>
           <Typography variant="h6" fontWeight={"bold"}>
             미디어

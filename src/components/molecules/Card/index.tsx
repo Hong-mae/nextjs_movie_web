@@ -1,6 +1,6 @@
 "use client";
 
-import { useYTDialogStore } from "@/stores/yt-dialog-store-provider";
+import { useYTDialogStore } from "@/stores/YoutubeDialogStore/provider";
 import { LibraryBooks, PlayArrowRounded } from "@mui/icons-material";
 import {
   Box,
@@ -157,6 +157,22 @@ export const ProfileCard = ({
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
           {character}
+        </Typography>
+      </CardContent>
+    </MuiCard>
+  );
+};
+
+export const MovieCard = ({ imgUrl, title, overview, mId }: MovieCardProps) => {
+  return (
+    <MuiCard>
+      <CardMedia component={"img"} image={imgUrl} alt={title} />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component={"div"}>
+          {title}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {overview}
         </Typography>
       </CardContent>
     </MuiCard>
