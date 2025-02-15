@@ -2,6 +2,8 @@
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef } from "react";
+import { getMovieList } from "./tmdbController";
+import { convertImageURL } from "./urlController";
 
 type IntersectHandler = (
   entry: IntersectionObserverEntry,
@@ -37,15 +39,20 @@ export const useIntersect = (
 interface Props {
   key: ReadonlyArray<string>;
   target: string;
-  fn: (target: string, pageParam: number) => any;
 }
 
-export const useFetchLists = ({ key, target, fn }: Props) => {
-  console.log(fn);
+export const useFetchLists = ({ key, target }: Props) => {
   return useInfiniteQuery({
     queryKey: key,
     queryFn: async ({ pageParam }) => {
-      const data = await fn(target, pageParam);
+      const data = await getMovieList(target, pageParam);
+
+      data.results = data.results.map((e: MovieInfoProps) => {
+        return {
+          ...e,
+          poster_path: convertImageURL(e.poster_path, 185),
+        };
+      });
 
       return data;
     },

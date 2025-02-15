@@ -95,10 +95,10 @@ export const ProfileImgList = ({
 interface MovieImgListProps extends Omit<BasicImgListProps, "list"> {
   list: ReadonlyArray<MovieInfoProps>;
 }
-export const MovieImgList = ({ list, width = "185px" }: MovieImgListProps) => {
+export const MovieImgList = ({ list }: MovieImgListProps) => {
   return (
     <Box sx={{ my: 4 }}>
-      <Grid container spacing={4} columns={{ xs: 2, sm: 3, md: 5, lg: 6 }}>
+      <Grid container spacing={4} columns={{ xs: 1, sm: 3, md: 5, lg: 7 }}>
         {list.map((e, i) => {
           return (
             <Grid key={i} size={1} data-id={e.id}>

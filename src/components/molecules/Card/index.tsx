@@ -165,16 +165,23 @@ export const ProfileCard = ({
 
 export const MovieCard = ({ imgUrl, title, overview, mId }: MovieCardProps) => {
   return (
-    <MuiCard>
-      <CardMedia component={"img"} image={imgUrl} alt={title} />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component={"div"}>
-          {title}
-        </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {overview}
-        </Typography>
-      </CardContent>
+    <MuiCard sx={{ height: "100%" }}>
+      <CardActionArea href={`/movie/details/${mId}`} sx={{ height: "100%" }}>
+        <CardMedia
+          component={"img"}
+          image={imgUrl}
+          alt={title}
+          sx={{ height: 275 }}
+        />
+        <CardContent sx={{ p: 1 }}>
+          <Typography gutterBottom variant="inherit" component={"div"}>
+            {title}
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            {overview}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
     </MuiCard>
   );
 };

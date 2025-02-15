@@ -8,14 +8,12 @@ import React, { useMemo } from "react";
 interface InfiniteScrollProps {
   pageNumber: number;
   target: string;
-  fn: () => any;
 }
 
-const InfiniteScroll = ({ pageNumber, target, fn }: InfiniteScrollProps) => {
+const InfiniteScroll = ({ pageNumber, target }: InfiniteScrollProps) => {
   const { data, hasNextPage, isFetching, fetchNextPage } = useFetchLists({
     key: ["MovieList"],
     target,
-    fn,
   });
 
   const newList = useMemo(

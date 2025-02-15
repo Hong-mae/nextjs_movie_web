@@ -38,32 +38,8 @@ interface MovieListProps {
   params: Promise<{ mType: string }>;
 }
 
-const getList = async (
-  mType: string,
-  page: number = 1
-): Promise<MovieListsProps> => {
-  const list = await getMovieList(mType, page).then((data: MovieListsProps) => {
-    let results: Array<MovieInfoProps> = data.results;
-
-    data.results = results.map((e) => {
-      return {
-        ...e,
-        poster_path: convertImageURL(e.poster_path, 185),
-      };
-    });
-
-    return data;
-  });
-
-  return list;
-};
-
 const MovieList = async ({ params }: MovieListProps) => {
   const mType = (await params).mType;
-  const {
-    page, // Get Page Number
-    results, // Movie list of page
-  } = await getList(mType);
 
   if (MovieType.findIndex((e) => e === mType) === -1) {
     notFound();
@@ -71,7 +47,9 @@ const MovieList = async ({ params }: MovieListProps) => {
 
   return (
     <Container maxWidth="xl">
-      <MovieImgList list={results} />
+      {/* <MovieImgList list={results} />
+       */}
+      <InfiniteScroll pageNumber={1} target={mType} />
     </Container>
   );
 };
