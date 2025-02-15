@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie Web
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![Image](https://github.com/user-attachments/assets/d21be8c8-4ef0-4e87-b0fa-ae75b8348333)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Deploy URL: https://nextjs-prj.hong-mae.com/
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 팀원 소개
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<div align="center">
 
-## Learn More
+|                                                              **박한빈**                                                              |
+| :----------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/10570126?v=4" height=150 width=150> <br/> @hong-mae](https://github.com/Hong-mae) |
 
-To learn more about Next.js, take a look at the following resources:
+</div>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 프로젝트 소개
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Next.js, TDMB Api를 이용한 토이 프로젝트입니다.
+- 전체적인 스타일은 Netflix를 참고했습니다.
+- TMDB Api를 통해 상영 중, 인기 영화, 최고 평점, 최근 개봉 및 임박한 영화를 확인 할 수 있습니다.
+- ~~로그인, 좋아요, 공유 등 활동을 할 수 있습니다~~
 
-## Deploy on Vercel
+## 시작 가이드
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 요구사항
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+빌드시 필요한 요구사항
+
+- Node.js > 18.18.x
+- Npm > 10.x.x
+- Next.js > 15.1.6
+- Material UI > 6.4.1
+- React Player > 2.16.0
+- React Slidk > 0.30.3
+- Slick Carousel > 1.8.1
+- Zustand > 5.0.3
+
+## Tech Stacks
+
+### Environment
+
+![Static Badge](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logoColor=white)
+![Static Badge](https://img.shields.io/badge/GIthub-%23181717?style=for-the-badge&logo=github&logoColor=white)
+![Static Badge](https://img.shields.io/badge/GIt-%23F05032?style=for-the-badge&logo=git&logoColor=white)
+
+### Config
+
+![Static Badge](https://img.shields.io/badge/npm-%23CB3837?style=for-the-badge&logo=npm&logoColor=white)
+
+### Development
+
+![Static Badge](https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Static Badge](https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white)
+![Static Badge](https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Static Badge](https://img.shields.io/badge/nextjs-%23000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![Static Badge](https://img.shields.io/badge/material%20UI-%23007FFF?style=for-the-badge&logo=mui&logoColor=white)
+![Static Badge](https://img.shields.io/badge/zustand-%23CB6D30?style=for-the-badge&logo=zustand&logoColor=white)
