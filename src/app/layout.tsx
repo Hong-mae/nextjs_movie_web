@@ -2,7 +2,7 @@
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, styled, ThemeProvider } from "@mui/material";
 import theme from "@/theme";
 import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
@@ -11,10 +11,13 @@ import ElevationScroll from "@/components/molecules/ElevationScroll";
 import React from "react";
 
 import "./globals.css";
+import { AccountsStoreProvider } from "@/stores/AccountsStore/provider";
 
 interface RootLayoutProps {
   children: React.ReactNode;
 }
+
+const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   const pahtname = usePathname();
@@ -26,14 +29,19 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <InitColorSchemeScript attribute="class" />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {isMainPage ? (
-              <ElevationScroll children={Navbar()}></ElevationScroll>
-            ) : (
-              <Navbar />
-            )}
-            {children}
-            <Footer />
+            <AccountsStoreProvider>
+              <CssBaseline />
+              {isMainPage ? (
+                <ElevationScroll children={Navbar()}></ElevationScroll>
+              ) : (
+                <>
+                  <Offset />
+                  <Navbar />
+                </>
+              )}
+              {children}
+              <Footer />
+            </AccountsStoreProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

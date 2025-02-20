@@ -146,6 +146,7 @@ const Navbar = () => {
               size="large"
               aria-label="account"
               sx={{ color: "white" }}
+              href="/sign-in"
             >
               <AccountCircle fontSize="inherit" />
             </IconButton>

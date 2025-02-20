@@ -42,7 +42,7 @@ export const useYTDialogStore = <T,>(
 
   if (!ytdialogStoreContext) {
     throw new Error(
-      `useYTDialogStore must be used within YTDialogStorePrivder`
+      `useYTDialogStore must be used within YTDialogStoreProvider`
     );
   }
 

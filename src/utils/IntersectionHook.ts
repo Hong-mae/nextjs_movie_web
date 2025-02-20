@@ -4,6 +4,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useRef } from "react";
 import { getMovieList } from "./tmdbController";
 import { convertImageURL } from "./urlController";
+import { LastPage } from "@mui/icons-material";
+import { pages } from "next/dist/build/templates/app-page";
 
 type IntersectHandler = (
   entry: IntersectionObserverEntry,
@@ -58,7 +60,9 @@ export const useFetchLists = ({ key, target }: Props) => {
     },
     initialPageParam: 1,
     getNextPageParam: (data) => {
-      return data.page + 1;
+      const { page, total_pages } = data;
+
+      return page < total_pages ? page + 1 : null;
     },
   });
 };
