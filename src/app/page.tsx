@@ -7,6 +7,7 @@ import { Box, Button } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import CarouselSection from "@/components/organisms/CarouselSection";
 import { Metadata } from "next";
+import { AlertDialog } from "@/components/molecules/Dialog";
 
 export const metadata: Metadata = {
   title: "Watch Movie",
@@ -146,6 +147,11 @@ export default async function Home() {
         {/* 최근 개봉, 예정작 */}
         <CarouselSection title="최근 개봉, 예정작" list={upcoming} />
       </Container>
+      <AlertDialog
+        title="주의하세요. 정확하지 않은 API를 이용하고 있습니다."
+        content="영화와 관련된 API는 TMDB API를 이용하고 있습니다. 이는 외국에서
+          제공하는 API이며 제목, 줄거리, 설명, 개봉일 등 정보가 정확하지 않을 수 있습니다."
+      />
     </>
   );
 }

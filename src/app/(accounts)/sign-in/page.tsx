@@ -1,19 +1,3 @@
-import { Facebook, Google } from "@mui/icons-material";
-import {
-  styled,
-  Card as MuiCard,
-  Stack,
-  Typography,
-  Box,
-  FormControl,
-  FormLabel,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Button,
-  Link,
-  Divider,
-} from "@mui/material";
 import { Metadata } from "next";
 import React from "react";
 
