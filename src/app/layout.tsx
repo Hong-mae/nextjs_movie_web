@@ -8,7 +8,6 @@ import Footer from "@/components/organisms/Footer";
 import { usePathname } from "next/navigation";
 import React from "react";
 import "./globals.css";
-import { AccountsStoreProvider } from "@/stores/AccountsStore/provider";
 import { ScrollNavbar, Navbar } from "@/components/organisms/Navbar";
 
 interface RootLayoutProps {
