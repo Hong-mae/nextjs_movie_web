@@ -1,13 +1,10 @@
+import LoginTemplate from "@/components/templates/SignIn/LoginTemplate";
 import { Metadata } from "next";
-import React from "react";
 
 export const metadata: Metadata = {
-  title: "Sign In | Watch Movie",
-  description: "로그인",
+  title: "로그인 | Watch Movie",
 };
 
-const SignIn = () => {
-  return <div>hi</div>;
-};
-
-export default SignIn;
+export default function LoginPage() {
+  return <LoginTemplate />;
+}

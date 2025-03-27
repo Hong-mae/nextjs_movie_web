@@ -1,4 +1,8 @@
+"use client";
+
+import { useHydrationReady } from "@/hooks/useHydrationReady";
 import ModeSwitch from "@/components/molecules/ModeSwitch";
+import useAuthStore from "@/stores/authStore";
 import {
   AccountCircle,
   Favorite,
@@ -11,6 +15,7 @@ import {
 } from "@mui/icons-material";
 import {
   AppBar,
+  Avatar,
   Box,
   Button,
   Container,
@@ -23,6 +28,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  useScrollTrigger,
 } from "@mui/material";
 import React, { useState } from "react";
 
@@ -45,9 +51,17 @@ const navItems = [
   },
 ];
 
-const Navbar = () => {
+interface NavbarProps {
+  elevation?: number;
+  style?: React.CSSProperties;
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ elevation = 0, style }) => {
   const [anchorElNav, setAnchorElNav] = useState(false);
   const [anchorElSettings, setAnchorElSettings] = useState(false);
+
+  const ready = useHydrationReady(useAuthStore);
+  const user = useAuthStore((state) => state.user);
 
   const toggleDrawer = () => {
     setAnchorElSettings((prevState) => !prevState);
@@ -106,8 +120,15 @@ const Navbar = () => {
     </Box>
   );
 
+  if (!ready) return null;
+
   return (
-    <AppBar component={"nav"} sx={{ bgcolor: "#303030" }}>
+    <AppBar
+      component={"nav"}
+      sx={{ bgcolor: "#303030" }}
+      elevation={elevation}
+      style={style}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Desktop Navbar */}
@@ -146,9 +167,17 @@ const Navbar = () => {
               size="large"
               aria-label="account"
               sx={{ color: "white" }}
-              href="/sign-in"
+              href={user ? "/my" : "/sign-in"}
             >
-              <AccountCircle fontSize="inherit" />
+              {user == null ? (
+                <AccountCircle fontSize="inherit" />
+              ) : (
+                <Avatar
+                  alt={user.email}
+                  src={user.profileUrl}
+                  sx={{ width: 28, height: 28 }}
+                />
+              )}
             </IconButton>
             <IconButton
               size="large"
@@ -206,7 +235,15 @@ const Navbar = () => {
               aria-label="account"
               sx={{ color: "white", display: { xs: "flex", md: "none" } }}
             >
-              <AccountCircle fontSize="inherit" />
+              {user == null ? (
+                <AccountCircle fontSize="inherit" />
+              ) : (
+                <Avatar
+                  alt={user.email}
+                  src={user.profileUrl}
+                  sx={{ width: 20, height: 20 }}
+                />
+              )}
             </IconButton>
             <IconButton
               size="large"
@@ -224,4 +261,20 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export const ScrollNavbar = () => {
+  const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
+
+  return (
+    <Navbar
+      elevation={trigger ? 4 : 0}
+      style={{
+        transition: "all 0.3s ease-in-out",
+        backgroundColor: trigger ? "#303030" : "transparent",
+        padding: trigger ? "0" : "1.5rem 0",
+        backgroundImage: trigger
+          ? "linear-gradient(180deg, rgba(48,48,48,1), transparent)"
+          : "none",
+      }}
+    />
+  );
+};

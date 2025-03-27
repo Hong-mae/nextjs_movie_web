@@ -1,6 +1,6 @@
 "use client";
 
-import { useYTDialogStore } from "@/stores/YoutubeDialogStore/provider";
+import useVideoDialogStore from "@/stores/videoDialogStore";
 import { LibraryBooks, PlayArrowRounded } from "@mui/icons-material";
 import {
   Box,
@@ -89,7 +89,7 @@ interface YoutubeCardProps extends CardProps {
 
 export const YoutubeCard = ({ title, imgUrl, vId }: YoutubeCardProps) => {
   const [isEnter, setIsEnter] = useState(false);
-  const { isOpen } = useYTDialogStore((state) => state);
+  const openDialog = useVideoDialogStore((state) => state.openDialog);
 
   const handleMouseEnter = () => {
     setIsEnter(true);
@@ -100,7 +100,7 @@ export const YoutubeCard = ({ title, imgUrl, vId }: YoutubeCardProps) => {
   };
 
   const handleOpenDialog = () => {
-    isOpen(title, vId, true);
+    openDialog({ title, vId });
   };
 
   return (

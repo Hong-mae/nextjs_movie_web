@@ -1,6 +1,5 @@
 "use client";
 
-import { useYTDialogStore } from "@/stores/YoutubeDialogStore/provider";
 import {
   Button,
   Dialog,
@@ -17,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import * as LocalStorage from "@/utils/localStorage";
 import dayjs, { ManipulateType } from "dayjs";
+import useVideoDialogStore from "@/stores/videoDialogStore";
 
 const StyledYoutubeDialog = styled(MuiDialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -26,14 +26,15 @@ const StyledYoutubeDialog = styled(MuiDialog)(({ theme }) => ({
 }));
 
 export const YoutubeDialog = () => {
-  const { title, vId, open, Close } = useYTDialogStore((state) => state);
+  const { isOpen, title, vId, closeDialog } = useVideoDialogStore();
 
   const handleClose = () => {
-    Close();
+    closeDialog();
   };
+
   return (
     <StyledYoutubeDialog
-      open={open}
+      open={isOpen}
       onClick={handleClose}
       aria-labelledby="youtube-dialog-title"
       fullWidth={true}

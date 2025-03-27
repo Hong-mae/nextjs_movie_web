@@ -4,14 +4,12 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 import { CssBaseline, styled, ThemeProvider } from "@mui/material";
 import theme from "@/theme";
-import Navbar from "@/components/organisms/Navbar";
 import Footer from "@/components/organisms/Footer";
 import { usePathname } from "next/navigation";
-import ElevationScroll from "@/components/molecules/ElevationScroll";
 import React from "react";
-
 import "./globals.css";
 import { AccountsStoreProvider } from "@/stores/AccountsStore/provider";
+import { ScrollNavbar, Navbar } from "@/components/organisms/Navbar";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -29,19 +27,17 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <InitColorSchemeScript attribute="class" />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
-            <AccountsStoreProvider>
-              <CssBaseline />
-              {isMainPage ? (
-                <ElevationScroll children={Navbar()}></ElevationScroll>
-              ) : (
-                <>
-                  <Offset />
-                  <Navbar />
-                </>
-              )}
-              {children}
-              <Footer />
-            </AccountsStoreProvider>
+            <CssBaseline />
+            {isMainPage ? (
+              <ScrollNavbar />
+            ) : (
+              <>
+                <Navbar elevation={4} />
+                <Offset />
+              </>
+            )}
+            {children}
+            <Footer />
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
