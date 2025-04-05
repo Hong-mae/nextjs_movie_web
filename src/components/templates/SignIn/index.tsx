@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import {
   Container,
   Box,
@@ -10,37 +9,44 @@ import {
   Button,
   Alert,
 } from "@mui/material";
-import useAuthStore from "@/stores/authStore";
+import { useRouter } from "next/navigation";
+import api from "@/utils/axiosInstance";
+import { useAuthStore } from "@/stores/auth/authStore";
 
-export default function LoginTemplate() {
+export default function SignInTemplate() {
   const router = useRouter();
-  const { login: setLogin } = useAuthStore();
+
+  // ✅ Provider 기반 훅으로 상태 접근
+  const login = useAuthStore((s) => s.login);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     setError("");
+    setLoading(true);
+
     try {
-      const res = await fetch("http://localhost:8090/api/v1/users/signIn", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
+      const res = await api.post("/v1/users/signIn", {
+        email,
+        password,
       });
 
-      const data = await res.json();
+      const { accessToken, user } = res.data.data;
 
-      if (!res.ok) throw new Error(data.message || "로그인 실패");
+      // ✅ Zustand 상태에 저장
+      login({ accessToken, user });
 
-      const { accessToken, user } = data.data;
-
-      console.log(accessToken, user);
-      setLogin({ accessToken, user });
-      // router.replace("/");
+      // ✅ 홈으로 이동
+      router.replace("/");
     } catch (err: any) {
-      setError(err.message || "서버 오류");
+      const message =
+        err?.response?.data?.message || err.message || "로그인 실패";
+      setError(message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,9 +78,10 @@ export default function LoginTemplate() {
           variant="contained"
           color="primary"
           onClick={handleLogin}
+          disabled={loading}
           sx={{ mt: 2 }}
         >
-          로그인
+          {loading ? "로그인 중..." : "로그인"}
         </Button>
       </Box>
     </Container>

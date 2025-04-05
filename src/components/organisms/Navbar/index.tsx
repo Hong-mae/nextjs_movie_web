@@ -1,10 +1,7 @@
 "use client";
 
-import { useHydrationReady } from "@/hooks/useHydrationReady";
 import ModeSwitch from "@/components/molecules/ModeSwitch";
-import useAuthStore from "@/stores/authStore";
 import {
-  AccountCircle,
   Favorite,
   Grade,
   LocalMovies,
@@ -15,7 +12,6 @@ import {
 } from "@mui/icons-material";
 import {
   AppBar,
-  Avatar,
   Box,
   Button,
   Container,
@@ -31,6 +27,7 @@ import {
   useScrollTrigger,
 } from "@mui/material";
 import React, { useState } from "react";
+import AccountIcon from "@/components/molecules/AccountIcon";
 
 const navItems = [
   {
@@ -59,9 +56,6 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ elevation = 0, style }) => {
   const [anchorElNav, setAnchorElNav] = useState(false);
   const [anchorElSettings, setAnchorElSettings] = useState(false);
-
-  const ready = useHydrationReady(useAuthStore);
-  const user = useAuthStore((state) => state.user);
 
   const toggleDrawer = () => {
     setAnchorElSettings((prevState) => !prevState);
@@ -120,8 +114,6 @@ export const Navbar: React.FC<NavbarProps> = ({ elevation = 0, style }) => {
     </Box>
   );
 
-  if (!ready) return null;
-
   return (
     <AppBar
       component={"nav"}
@@ -163,22 +155,7 @@ export const Navbar: React.FC<NavbarProps> = ({ elevation = 0, style }) => {
                 <Button sx={{ color: "white" }}>{item.title}</Button>
               </Link>
             ))}
-            <IconButton
-              size="large"
-              aria-label="account"
-              sx={{ color: "white" }}
-              href={user ? "/my" : "/sign-in"}
-            >
-              {user == null ? (
-                <AccountCircle fontSize="inherit" />
-              ) : (
-                <Avatar
-                  alt={user.email}
-                  src={user.profileUrl}
-                  sx={{ width: 28, height: 28 }}
-                />
-              )}
-            </IconButton>
+            <AccountIcon />
             <IconButton
               size="large"
               aria-label="settings"
@@ -230,21 +207,7 @@ export const Navbar: React.FC<NavbarProps> = ({ elevation = 0, style }) => {
             </Link>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account"
-              sx={{ color: "white", display: { xs: "flex", md: "none" } }}
-            >
-              {user == null ? (
-                <AccountCircle fontSize="inherit" />
-              ) : (
-                <Avatar
-                  alt={user.email}
-                  src={user.profileUrl}
-                  sx={{ width: 20, height: 20 }}
-                />
-              )}
-            </IconButton>
+            <AccountIcon />
             <IconButton
               size="large"
               aria-label="settings"

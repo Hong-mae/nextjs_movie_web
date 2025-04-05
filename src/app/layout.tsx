@@ -1,24 +1,20 @@
-"use client";
-
+// ✅ app/layout.tsx
+import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
-import { CssBaseline, styled, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "@/theme";
 import Footer from "@/components/organisms/Footer";
-import { usePathname } from "next/navigation";
-import React from "react";
-import "./globals.css";
-import { ScrollNavbar, Navbar } from "@/components/organisms/Navbar";
+import { getUserFromCookie } from "@/lib/auth";
+import ClientLayout from "./client-layout";
+import AuthStoreProvider from "@/stores/auth/authStoreProvider";
 
-interface RootLayoutProps {
+export default async function RootLayout({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
-
-const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
-  const pahtname = usePathname();
-  const isMainPage = pahtname === "/";
+}) {
+  const userData = await getUserFromCookie();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -26,22 +22,14 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
         <InitColorSchemeScript attribute="class" />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {isMainPage ? (
-              <ScrollNavbar />
-            ) : (
-              <>
-                <Navbar elevation={4} />
-                <Offset />
-              </>
-            )}
-            {children}
-            <Footer />
+            <AuthStoreProvider initialState={userData ?? undefined}>
+              <CssBaseline />
+              <ClientLayout>{children}</ClientLayout>
+              <Footer />
+            </AuthStoreProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}
