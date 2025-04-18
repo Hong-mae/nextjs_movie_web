@@ -40,7 +40,7 @@ export default function SignInTemplate() {
       login({ accessToken, user });
 
       // ✅ 홈으로 이동
-      router.replace("/");
+      // router.replace("/");
     } catch (err: any) {
       const message =
         err?.response?.data?.message || err.message || "로그인 실패";
